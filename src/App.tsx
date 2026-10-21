@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ClinicalProvider } from './context/ClinicalContext';
 import { Layout } from './components/layout/Layout';
 import { PageId } from './components/layout/Sidebar';
 import { LoginPage } from './pages/LoginPage';
@@ -8,13 +9,23 @@ import { SearchPage } from './pages/SearchPage';
 import { RiskDetailPage } from './pages/RiskDetailPage';
 import { GuidelinePage } from './pages/GuidelinePage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
+import { LabDispatchPage } from './pages/LabDispatchPage';
 import { ModelManagerPage } from './pages/ModelManagerPage';
 import { SettingsPage } from './pages/SettingsPage';
 
 const AppContent: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, currentUser } = useAuth();
   const [currentPage, setCurrentPage] = useState<PageId>('dashboard');
   const [selectedScenarioId, setSelectedScenarioId] = useState<string>('sc-01');
+
+  // Arahkan ke halaman utama sesuai peran saat pengguna login
+  useEffect(() => {
+    if (currentUser?.roleType === 'laboran') {
+      setCurrentPage('lab-input');
+    } else if (currentUser) {
+      setCurrentPage('dashboard');
+    }
+  }, [currentUser]);
 
   if (!isAuthenticated) {
     return <LoginPage />;
@@ -25,6 +36,21 @@ const AppContent: React.FC = () => {
       case 'dashboard':
         return (
           <DashboardPage
+            onNavigate={setCurrentPage}
+            onSelectScenario={setSelectedScenarioId}
+          />
+        );
+      case 'lab-input':
+        if (currentUser?.roleType !== 'laboran') {
+          return (
+            <DashboardPage
+              onNavigate={setCurrentPage}
+              onSelectScenario={setSelectedScenarioId}
+            />
+          );
+        }
+        return (
+          <LabDispatchPage
             onNavigate={setCurrentPage}
             onSelectScenario={setSelectedScenarioId}
           />
@@ -82,7 +108,9 @@ const AppContent: React.FC = () => {
 export const App: React.FC = () => {
   return (
     <AuthProvider>
-      <AppContent />
+      <ClinicalProvider>
+        <AppContent />
+      </ClinicalProvider>
     </AuthProvider>
   );
 };

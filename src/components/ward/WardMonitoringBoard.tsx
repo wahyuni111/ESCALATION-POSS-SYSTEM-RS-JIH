@@ -6,9 +6,10 @@ import {
   Stethoscope,
   ArrowRight,
   Filter,
-  ShieldAlert
+  ShieldAlert,
+  FlaskConical
 } from 'lucide-react';
-import { DUMMY_WARD_ROOMS } from '../../data/dummyWards';
+import { useClinical } from '../../context/ClinicalContext';
 import { RiskLevel } from '../../types/clinical';
 import { RiskBadge } from '../common/RiskBadge';
 
@@ -21,19 +22,20 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
   onSelectScenario,
   onOpenGuideline
 }) => {
+  const { rooms } = useClinical();
   const [filterLevel, setFilterLevel] = useState<RiskLevel | 'all'>('all');
   const [selectedWard, setSelectedWard] = useState<string>('all');
 
-  const wards = Array.from(new Set(DUMMY_WARD_ROOMS.map((r) => r.wardName)));
+  const wards = Array.from(new Set(rooms.map((r) => r.wardName)));
 
-  const filteredRooms = DUMMY_WARD_ROOMS.filter((room) => {
+  const filteredRooms = rooms.filter((room) => {
     const matchLevel = filterLevel === 'all' || room.riskLevel === filterLevel;
     const matchWard = selectedWard === 'all' || room.wardName === selectedWard;
     return matchLevel && matchWard;
   });
 
-  const criticalCount = DUMMY_WARD_ROOMS.filter((r) => r.riskLevel === 4).length;
-  const highCount = DUMMY_WARD_ROOMS.filter((r) => r.riskLevel === 3).length;
+  const criticalCount = rooms.filter((r) => r.riskLevel === 4).length;
+  const highCount = rooms.filter((r) => r.riskLevel === 3).length;
 
   return (
     <section className="bg-white rounded-xl border border-slate-200 shadow-xs p-5 lg:p-6 mb-8">
@@ -81,7 +83,7 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
             }`}
           >
-            Semua ({DUMMY_WARD_ROOMS.length})
+            Semua ({rooms.length})
           </button>
           <button
             onClick={() => setFilterLevel(4)}
@@ -91,7 +93,7 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
                 : 'bg-white text-rose-700 hover:bg-rose-50 border border-rose-200'
             }`}
           >
-            Level 4: Kritis ({DUMMY_WARD_ROOMS.filter((r) => r.riskLevel === 4).length})
+            Level 4: Kritis ({rooms.filter((r) => r.riskLevel === 4).length})
           </button>
           <button
             onClick={() => setFilterLevel(3)}
@@ -101,7 +103,7 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
                 : 'bg-white text-orange-700 hover:bg-orange-50 border border-orange-200'
             }`}
           >
-            Level 3: Tinggi ({DUMMY_WARD_ROOMS.filter((r) => r.riskLevel === 3).length})
+            Level 3: Tinggi ({rooms.filter((r) => r.riskLevel === 3).length})
           </button>
           <button
             onClick={() => setFilterLevel(2)}
@@ -111,7 +113,7 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
                 : 'bg-white text-amber-700 hover:bg-amber-50 border border-amber-200'
             }`}
           >
-            Level 2: Sedang ({DUMMY_WARD_ROOMS.filter((r) => r.riskLevel === 2).length})
+            Level 2: Sedang ({rooms.filter((r) => r.riskLevel === 2).length})
           </button>
         </div>
 
@@ -155,9 +157,16 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
                 {/* Header Kartu: Nama Kamar, Pasien & Badge Risiko */}
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <h3 className="font-bold text-sm text-slate-900 truncate">
-                      {room.roomNumber}
-                    </h3>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <h3 className="font-bold text-sm text-slate-900 truncate">
+                        {room.roomNumber}
+                      </h3>
+                      {room.rmNumber && (
+                        <span className="font-mono text-[10px] font-semibold text-slate-600 bg-slate-100 border border-slate-200 px-1.5 py-0.2 rounded">
+                          RM {room.rmNumber}
+                        </span>
+                      )}
+                    </div>
                     <p className="text-xs text-slate-500 truncate mt-0.5">
                       {room.patientInitials}, {room.ageGender} • {room.wardName}
                     </p>
@@ -166,16 +175,32 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
                 </div>
 
                 {/* Tanda Bahaya & Temuan Kritis Klinis */}
-                <div className="mt-3 pt-3 border-t border-slate-100 space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 block">
-                    Tanda Bahaya & Nilai Kritis:
-                  </span>
+                <div className="mt-3 pt-3 border-t border-slate-100 space-y-1.5">
+                  <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-slate-600">
+                    <span>Tanda Bahaya & Nilai Kritis:</span>
+                    <span className="text-[10px] text-jih-blue flex items-center gap-1 font-semibold normal-case font-mono">
+                      <FlaskConical className="w-3 h-3 text-jih-blue" aria-hidden="true" />
+                      {room.noLab ? `LIS ${room.noLab.slice(-6)}` : 'LIS Laborat'}
+                    </span>
+                  </div>
                   <p className="text-xs sm:text-sm font-semibold text-slate-900 leading-snug">
                     {room.criticalFlag}
                   </p>
-                  <p className="text-[11px] text-slate-500">
+                  <p className="text-[11px] text-slate-500 truncate">
                     <span className="font-medium text-slate-600">Diagnosis:</span> {room.currentDiagnosis}
                   </p>
+                  {room.nurseReceiver && (
+                    <div className="text-[10px] text-slate-500 flex items-center justify-between pt-1 border-t border-dashed border-slate-200">
+                      <span className="truncate">
+                        Perawat Penerima: <strong className="text-slate-700">{room.nurseReceiver}</strong>
+                      </span>
+                      {room.reportedAt && (
+                        <span className="font-mono text-[9px] text-slate-400 shrink-0 ml-1">
+                          {room.reportedAt}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Rekomendasi Tindakan & Kewenangan Mandiri Terpadu */}
@@ -209,7 +234,9 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
                 <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500">
                   <div className="flex items-center gap-1.5 truncate">
                     <UserCheck className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
-                    <span>DPJP:</span>
+                    <span className="truncate">
+                      {room.doctorInCharge ? `${room.doctorInCharge}:` : 'DPJP:'}
+                    </span>
                     <span
                       className={`font-semibold truncate ${
                         room.doctorStatus.includes('Operasi') ||

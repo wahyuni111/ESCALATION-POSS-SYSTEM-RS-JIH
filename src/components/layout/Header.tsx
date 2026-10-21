@@ -27,6 +27,10 @@ export const Header: React.FC<HeaderProps> = ({
       title: 'Dashboard Panduan Klinis',
       subtitle: 'Monitoring Kesiapsiagaan Bangsal & Alur Eskalasi'
     },
+    'lab-input': {
+      title: 'Portal Input & Diseminasi Nilai Kritis Lab (LIS)',
+      subtitle: 'Entri Hasil Uji Laboratorium Sentral untuk Memicu Panduan Eskalasi Bangsal'
+    },
     search: {
       title: 'Pencarian Skenario & Pemeriksaan',
       subtitle: 'Katalog Nilai Kritis & Standar Tindakan Keperawatan'
@@ -88,8 +92,8 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Kanan: Pencarian Cepat, Shift Switcher, Notifikasi Alert, & Profil */}
       <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-        {/* Tombol Pencarian Cepat */}
-        {currentPage !== 'search' && (
+        {/* Tombol Pencarian Cepat (Khusus Perawat) */}
+        {currentPage !== 'search' && currentUser?.roleType !== 'laboran' && (
           <button
             onClick={() => onNavigate('search')}
             className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-500 hover:bg-white hover:text-slate-800 hover:border-slate-300 transition-colors text-xs"

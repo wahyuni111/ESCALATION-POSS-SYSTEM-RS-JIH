@@ -7,14 +7,34 @@ export const DEMO_USERS: UserProfile[] = [
     name: 'Ns. Siti Rahayu, S.Kep',
     nip: 'JIH-PWT-2021-084',
     role: 'Perawat Pelaksana Bangsal',
+    roleType: 'nurse',
     ward: 'Bangsal Melati (Rawat Inap Bedah & Dalam)',
     shift: 'Shift Sore (14.00 - 21.00)'
+  },
+  {
+    id: 'user-lab-01',
+    name: 'Analis Hendra Kurniawan, A.Md.AK',
+    nip: 'JIH-LAB-2020-041',
+    role: 'Pranata Laboratorium Medis (Laboran LIS)',
+    roleType: 'laboran',
+    ward: 'Laboratorium Sentral RS JIH Purwokerto',
+    shift: 'Shift Sore (14.00 - 21.00)'
+  },
+  {
+    id: 'user-lab-02',
+    name: 'Analis Maya Safitri, S.Tr.Kes',
+    nip: 'JIH-LAB-2022-092',
+    role: 'Pranata Laboratorium Medis (Kimia Darah & AGD)',
+    roleType: 'laboran',
+    ward: 'Laboratorium Sentral RS JIH Purwokerto',
+    shift: 'Shift Pagi (07.00 - 14.00)'
   },
   {
     id: 'user-02',
     name: 'Ns. Ahmad Fauzi, A.Md.Kep',
     nip: 'JIH-PWT-2019-032',
     role: 'Perawat Gawat Darurat & Triase',
+    roleType: 'nurse',
     ward: 'Instalasi Gawat Darurat (IGD)',
     shift: 'Shift Pagi (07.00 - 14.00)'
   },
@@ -23,6 +43,7 @@ export const DEMO_USERS: UserProfile[] = [
     name: 'Ns. Tri Wahyuni, S.Kep',
     nip: 'JIH-PWT-2022-115',
     role: 'Perawat Rawat Jalan',
+    roleType: 'nurse',
     ward: 'Poli Spesialis Jantung & Penyakit Dalam',
     shift: 'Shift Pagi (07.00 - 14.00)'
   },
@@ -31,6 +52,7 @@ export const DEMO_USERS: UserProfile[] = [
     name: 'Ns. Bambang Santoso, S.Kep, M.Kep',
     nip: 'JIH-PWT-2016-008',
     role: 'Supervisor Keperawatan & Komite Mutu',
+    roleType: 'supervisor',
     ward: 'Komite Keperawatan RS JIH Purwokerto',
     shift: 'Shift Pagi (07.00 - 14.00)'
   }

@@ -5,6 +5,7 @@ import {
   Activity,
   FileCheck2,
   BarChart3,
+  FlaskConical,
   Cpu,
   Settings,
   LogOut,
@@ -18,6 +19,7 @@ import { useAuth } from '../../context/AuthContext';
 
 export type PageId =
   | 'dashboard'
+  | 'lab-input'
   | 'search'
   | 'risk-detail'
   | 'guideline'
@@ -32,6 +34,16 @@ interface SidebarProps {
   onToggleCollapse: () => void;
 }
 
+interface NavItem {
+  id: PageId;
+  label: string;
+  sublabel: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge?: string;
+  highlight?: boolean;
+  isPrototype?: boolean;
+}
+
 export const Sidebar: React.FC<SidebarProps> = ({
   currentPage,
   onNavigate,
@@ -40,53 +52,81 @@ export const Sidebar: React.FC<SidebarProps> = ({
 }) => {
   const { currentUser, logout } = useAuth();
 
-  const navItems = [
+  const isLaboran = currentUser?.roleType === 'laboran';
+
+  const laboranNavItems: NavItem[] = [
     {
-      id: 'dashboard' as PageId,
+      id: 'dashboard',
       label: 'Dashboard Klinis',
       sublabel: 'Peta Ruang & Skenario Aktif',
       icon: LayoutDashboard,
       badge: '6 Ruang'
     },
     {
-      id: 'analytics' as PageId,
+      id: 'lab-input',
+      label: 'Input Hasil Lab (LIS)',
+      sublabel: 'Diseminasi Nilai Kritis',
+      icon: FlaskConical,
+      badge: 'Role Anda',
+      highlight: true
+    },
+    {
+      id: 'analytics',
+      label: 'Analitik & Kepatuhan',
+      sublabel: 'Beban Risiko & Audit SBAR',
+      icon: BarChart3
+    }
+  ];
+
+  const nurseNavItems: NavItem[] = [
+    {
+      id: 'dashboard',
+      label: 'Dashboard Klinis',
+      sublabel: 'Peta Ruang & Skenario Aktif',
+      icon: LayoutDashboard,
+      badge: '6 Ruang'
+    },
+    {
+      id: 'analytics',
       label: 'Analitik & Kepatuhan',
       sublabel: 'Beban Risiko & Audit SBAR',
       icon: BarChart3
     },
     {
-      id: 'search' as PageId,
+      id: 'search',
       label: 'Pencarian Skenario',
       sublabel: 'Pemeriksaan & Ambang Lab',
       icon: Search
     },
     {
-      id: 'risk-detail' as PageId,
+      id: 'risk-detail',
       label: 'Klasifikasi Risiko',
       sublabel: 'Matriks Level 1 - 4',
       icon: Activity
     },
     {
-      id: 'guideline' as PageId,
+      id: 'guideline',
       label: 'Panduan Tindak Lanjut',
       sublabel: 'Tindakan Mandiri & SBAR',
       icon: FileCheck2,
       highlight: true
     },
     {
-      id: 'model-manager' as PageId,
+      id: 'model-manager',
       label: 'Pengelola Data & Model',
       sublabel: 'Prototype UI Eksploratif',
       icon: Cpu,
       isPrototype: true
     },
     {
-      id: 'settings' as PageId,
+      id: 'settings',
       label: 'Pengaturan & Audit',
       sublabel: 'Jejak Baca & Preferensi',
       icon: Settings
     }
   ];
+
+  const navItems = isLaboran ? laboranNavItems : nurseNavItems;
 
   return (
     <aside
@@ -127,7 +167,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-semibold text-white truncate">{currentUser.name}</p>
                 <div className="flex items-center gap-1.5 text-[10px] text-blue-200/70 truncate">
-                  <BedDouble className="w-3 h-3 text-blue-300" />
+                  {currentUser.roleType === 'laboran' ? (
+                    <FlaskConical className="w-3 h-3 text-amber-300" />
+                  ) : (
+                    <BedDouble className="w-3 h-3 text-blue-300" />
+                  )}
                   <span className="truncate">{currentUser.ward.split('(')[0]}</span>
                 </div>
               </div>
@@ -146,7 +190,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
       {/* Navigation Items */}
       <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto">
         <div className="px-3 pb-2 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-          {!collapsed ? 'Menu Utama Keperawatan' : '•'}
+          {!collapsed
+            ? currentUser?.roleType === 'laboran'
+              ? 'Menu Petugas Laborat (LIS)'
+              : 'Menu Utama Keperawatan'
+            : '•'}
         </div>
 
         {navItems.map((item) => {

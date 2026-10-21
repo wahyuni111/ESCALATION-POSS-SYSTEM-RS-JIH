@@ -35,14 +35,21 @@ export interface WardRoom {
   wardName: string;
   patientInitials: string;
   ageGender: string;
+  rmNumber?: string;
+  episodeNumber?: string;
+  noLab?: string;
+  layananPanel?: string;
   currentDiagnosis: string;
   scenarioId: string;
   riskLevel: RiskLevel;
   criticalFlag: string;
   urgentActionNeeded: string;
+  doctorInCharge?: string;
   doctorStatus: 'Sedang Tindakan Operasi' | 'Visite Ruang Lain' | 'Tersedia di Tempat' | 'Sedang Melayani Poli';
   independentActionAllowed: string;
   timeElapsedMinutes: number;
+  reportedAt?: string;
+  nurseReceiver?: string;
 }
 
 export interface SbarStep {
@@ -124,6 +131,7 @@ export interface UserProfile {
   name: string;
   nip: string;
   role: string;
+  roleType?: 'nurse' | 'laboran' | 'supervisor';
   ward: string;
   shift: 'Shift Pagi (07.00 - 14.00)' | 'Shift Sore (14.00 - 21.00)' | 'Shift Malam (21.00 - 07.00)';
 }
