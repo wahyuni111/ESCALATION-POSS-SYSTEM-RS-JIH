@@ -83,7 +83,7 @@ export const DUMMY_GUIDELINES: Record<string, GuidelineDetail> = {
         code: 'S',
         title: 'Situation (Situasi)',
         label: 'Kondisi Akut Terkini',
-        content: 'Lapor Dokter, saya Ns. Siti dari Bangsal Melati. Pasien Tn. S.W. di Kamar 302 mengalami henti jantung mendadak, nadi karotis tidak teraba, Code Blue telah diaktifkan.',
+        content: 'Lapor Dokter, saya Ns. Siti dari Bangsal Tulip. Pasien Tn. S.W. di Kamar 302 mengalami henti jantung mendadak, nadi karotis tidak teraba, Code Blue telah diaktifkan.',
         instructions: 'Sebutkan identitas pasien, nomor kamar, dan masalah utama dalam kalimat pertama.'
       },
       {
@@ -123,8 +123,8 @@ export const DUMMY_GUIDELINES: Record<string, GuidelineDetail> = {
     scenarioId: 'sc-02',
     scenarioTitle: 'Krisis Hiperglikemia Bergejala Akut (KAD / HHS)',
     riskLevel: 3,
-    criticalLabValue: 'GDS Kritis: 520 mg/dL + Keton Urine Positif (+++)',
-    doctorInCharge: 'dr. Anisa Rahmawati, Sp.PD, K-EMD',
+    criticalLabValue: 'Glukosa Sewaktu (GDS) Kritis: 831.36 mg/dL + Ketonuria (+++)',
+    doctorInCharge: 'dr. Pugud, Sp.PD',
     verifiedByCommittee: 'Komite Medik Penyakit Dalam RS JIH Purwokerto',
     lastUpdated: '05 September 2026',
 
@@ -194,7 +194,7 @@ export const DUMMY_GUIDELINES: Record<string, GuidelineDetail> = {
         code: 'S',
         title: 'Situation (Situasi)',
         label: 'Kondisi Akut Terkini',
-        content: 'Lapor Dokter, saya Ns. Tri dari Bangsal Mawar. Pasien Ny. D.H. di Kamar 201 tampak sesak napas dalam (Kussmaul) dan somnolen. GDS terdeteksi 520 mg/dL.',
+        content: 'Lapor Dokter, saya Ns. Siti dari Bangsal Tulip. Pasien Tn. H.B. di Kamar 306 tampak sesak napas dalam (Kussmaul) dan somnolen. GDS terdeteksi 831.36 mg/dL.',
         instructions: 'Jelaskan tingkat kesadaran dan hasil lab kritis secara presisi.'
       },
       {
@@ -234,8 +234,8 @@ export const DUMMY_GUIDELINES: Record<string, GuidelineDetail> = {
     scenarioId: 'sc-03',
     scenarioTitle: 'Desaturasi Oksigen Akut & Gagal Napas Mendadak',
     riskLevel: 4,
-    criticalLabValue: 'Analisis Gas Darah: PaO2 51 mmHg, SpO2 81% (Gagal Napas Akut)',
-    doctorInCharge: 'dr. Fajar Nugroho, Sp.P',
+    criticalLabValue: 'Analisis Gas Darah (AGD): PO2 42 mm Hg, PCO2 > 130 mm Hg, SpO2 82% (Kritis)',
+    doctorInCharge: 'dr. Cempaka, Sp.P',
     verifiedByCommittee: 'Komite Medik Paru & IGD RS JIH Purwokerto',
     lastUpdated: '18 Agustus 2026',
 
@@ -337,10 +337,10 @@ export const DUMMY_GUIDELINES: Record<string, GuidelineDetail> = {
   'sc-04': {
     id: 'guide-04',
     scenarioId: 'sc-04',
-    scenarioTitle: 'Sepsis Warning: Early Warning Score (NEWS) Meningkat',
+    scenarioTitle: 'Sepsis Warning & Gangguan Elektrolit Kritis',
     riskLevel: 3,
-    criticalLabValue: 'Laktat Darah: 3.8 mmol/L + Leukosit: 24.500 /uL (Tanda Awal Syok Septik)',
-    doctorInCharge: 'dr. Hendra Wicaksono, Sp.B, FICS',
+    criticalLabValue: 'Natrium Kritis: 124.1 mmol/L (**) & Leukosit 24.500 /uL (NEWS Meningkat)',
+    doctorInCharge: 'dr. Ghea, Sp.PD',
     verifiedByCommittee: 'Komite PPI & Medik Bedah RS JIH Purwokerto',
     lastUpdated: '28 Juli 2026',
 
@@ -404,7 +404,7 @@ export const DUMMY_GUIDELINES: Record<string, GuidelineDetail> = {
         code: 'S',
         title: 'Situation (Situasi)',
         label: 'Peringatan Sepsis Akut',
-        content: 'Lapor Dokter, saya Ns. Siti dari Bangsal Melati. Pasien Tn. A.R. di Kamar 303 mengalami demam tinggi 39.1 C dengan tekanan darah turun ke 88/55 mmHg.',
+        content: 'Lapor Dokter, saya Ns. Siti dari Bangsal Orchid. Pasien Ny. M.K. di Kamar 201 mengalami hiponatremia berat 124.1 mmol/L dan demam tinggi dengan tekanan darah turun ke 88/55 mmHg.',
         instructions: 'Sampaikan tren penurunan hemodinamik secara lugas.'
       },
       {
@@ -542,10 +542,10 @@ export const DUMMY_GUIDELINES: Record<string, GuidelineDetail> = {
   'sc-06': {
     id: 'guide-06',
     scenarioId: 'sc-06',
-    scenarioTitle: 'Pemantauan Glukosa Stabil & Tanda Vital Terkendali',
+    scenarioTitle: 'Pemantauan Profil Terkendali Pasca-Koreksi Nilai Kritis',
     riskLevel: 1,
-    criticalLabValue: 'GDS Terkendali: 134 mg/dL (Rentang Sasaran Bangsal: 110 - 180 mg/dL)',
-    doctorInCharge: 'dr. Anisa Rahmawati, Sp.PD, K-EMD',
+    criticalLabValue: 'Kondisi Terkendali: Kalium 4.2 mmol/L & GDS 134 mg/dL (Target Fisiologis Bangsal)',
+    doctorInCharge: 'dr. Nadia, Sp.PD',
     verifiedByCommittee: 'Komite Medik & Standar Asuhan Keperawatan RS JIH Purwokerto',
     lastUpdated: '10 September 2026',
 

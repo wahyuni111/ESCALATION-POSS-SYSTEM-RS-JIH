@@ -18,6 +18,7 @@ export interface Scenario {
   title: string;
   category: 'Kardiologi' | 'Respirasi' | 'Metabolik & Lab' | 'Sepsis & Infeksi' | 'Neurologi';
   department: 'Rawat Inap' | 'Poli Rawat Jalan' | 'IGD' | 'ICU/ICCU';
+  wardLocation?: string;
   riskLevel: RiskLevel;
   criticalLabTrigger: string;
   labThresholdExample: string;

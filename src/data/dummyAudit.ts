@@ -4,62 +4,82 @@ export const DUMMY_AUDIT_LOGS: AuditLogItem[] = [
   {
     id: 'aud-001',
     timestamp: '21/10/2026, 17:15:22',
-    nurseName: 'Ns. Siti Rahayu, S.Kep',
+    nurseName: 'Uji Prihatiningsih',
     role: 'Perawat Pelaksana Bangsal',
-    ward: 'Bangsal Melati (Bedah)',
-    actionType: 'Membaca Panduan',
-    scenarioTitle: 'Henti Jantung / Aritmia Letal Mengancam Nyawa',
+    ward: 'Bangsal Tulip (Kelas VIP)',
+    actionType: 'Simulasi Checklist SBAR',
+    scenarioTitle: 'Desaturasi Berat & Asidosis Respiratorik (PO2 42 mm Hg)',
     riskLevel: 4
   },
   {
     id: 'aud-002',
-    timestamp: '21/10/2026, 17:08:44',
-    nurseName: 'Ns. Siti Rahayu, S.Kep',
-    role: 'Perawat Pelaksana Bangsal',
-    ward: 'Bangsal Melati (Bedah)',
+    timestamp: '21/10/2026, 16:58:10',
+    nurseName: 'Vita Anggis, S.Kep., Ners',
+    role: 'Perawat Intensif ICU',
+    ward: 'Intensive Care Unit (ICU)',
     actionType: 'Simulasi Checklist SBAR',
-    scenarioTitle: 'Henti Jantung / Aritmia Letal Mengancam Nyawa',
+    scenarioTitle: 'Gagal Napas Tipe 2 & Asidosis Ekstrim (PCO2 > 130 mm Hg)',
     riskLevel: 4
   },
   {
     id: 'aud-003',
-    timestamp: '21/10/2026, 16:42:10',
-    nurseName: 'Ns. Ahmad Fauzi, A.Md.Kep',
-    role: 'Perawat Triase IGD',
-    ward: 'Instalasi Gawat Darurat',
-    actionType: 'Akses Detail Risiko',
-    scenarioTitle: 'Desaturasi Oksigen Akut & Gagal Napas Mendadak',
-    riskLevel: 4
+    timestamp: '21/10/2026, 16:35:45',
+    nurseName: 'Diah Kartika, AMK',
+    role: 'Perawat Pelaksana Bangsal',
+    ward: 'Bangsal Tulip (Kelas VIP)',
+    actionType: 'Membaca Panduan',
+    scenarioTitle: 'Krisis Hiperglikemia Ekstrim KAD / HHS (GDS 831 mg/dL)',
+    riskLevel: 3
   },
   {
     id: 'aud-004',
-    timestamp: '21/10/2026, 16:15:03',
-    nurseName: 'Ns. Tri Wahyuni, S.Kep',
-    role: 'Perawat Poli Rawat Jalan',
-    ward: 'Poli Spesialis Jantung',
-    actionType: 'Membaca Panduan',
-    scenarioTitle: 'Krisis Hipertensi Tanpa Kerusakan Organ Target Akut',
-    riskLevel: 2
+    timestamp: '21/10/2026, 15:40:12',
+    nurseName: 'Shinta Pramudya, S.Kep., Ns',
+    role: 'Perawat Pelaksana Bangsal',
+    ward: 'Bangsal Orchid (Kelas VIP)',
+    actionType: 'Akses Detail Risiko',
+    scenarioTitle: 'Koreksi Hiponatremia Berat & Proteksi Kejang (Na 118.3 mmol/L)',
+    riskLevel: 4
   },
   {
     id: 'aud-005',
-    timestamp: '21/10/2026, 15:50:18',
-    nurseName: 'Ns. Bambang Santoso, S.Kep',
-    role: 'Supervisor Keperawatan',
-    ward: 'Komite Keperawatan',
-    actionType: 'Pencarian Skenario',
-    scenarioTitle: 'Sepsis Warning: Early Warning Score (NEWS) Meningkat',
+    timestamp: '21/10/2026, 14:22:05',
+    nurseName: 'Tri Harningsih, S.Kep., Ns',
+    role: 'Perawat Pelaksana Bangsal',
+    ward: 'Bangsal Olive (Junior Suite)',
+    actionType: 'Membaca Panduan',
+    scenarioTitle: 'Waspada Perdarahan Spontan Trombositopenia Kritis (Trombosit 10.000 /µL)',
     riskLevel: 3
   },
   {
     id: 'aud-006',
-    timestamp: '21/10/2026, 14:30:55',
-    nurseName: 'Ns. Siti Rahayu, S.Kep',
-    role: 'Perawat Pelaksana Bangsal',
-    ward: 'Bangsal Melati (Bedah)',
-    actionType: 'Membaca Panduan',
-    scenarioTitle: 'Krisis Hiperglikemia Bergejala Akut (KAD / HHS)',
-    riskLevel: 3
+    timestamp: '21/10/2026, 13:10:30',
+    nurseName: 'Kiki Septiana Hermawan, S.Kep., Ns',
+    role: 'Perawat Bangsal Pediatrik',
+    ward: 'Bangsal Lily (Kelas VIP Anak)',
+    actionType: 'Simulasi Checklist SBAR',
+    scenarioTitle: 'Rehidrasi & Terapi Hiponatremia Pediatrik Akut (Na 121.9 mmol/L)',
+    riskLevel: 2
+  },
+  {
+    id: 'aud-007',
+    timestamp: '21/10/2026, 11:45:18',
+    nurseName: 'Syarah Nur Hayah, S.Kep., Ns',
+    role: 'Perawat Intensif ICU',
+    ward: 'Intensive Care Unit (ICU)',
+    actionType: 'Akses Detail Risiko',
+    scenarioTitle: 'Infark Miokard Akut Elevasi Biomarker (HS Troponin I > 2.2 ng/mL)',
+    riskLevel: 4
+  },
+  {
+    id: 'aud-008',
+    timestamp: '21/10/2026, 10:15:00',
+    nurseName: 'Rinjani Widya Saraswati, Amd.Kep',
+    role: 'Perawat Triase IGD',
+    ward: 'Instalasi Gawat Darurat (IGD)',
+    actionType: 'Pencarian Skenario',
+    scenarioTitle: 'Resusitasi Jantung-Paru & Defibrilasi Aritmia Ventrikel Letal',
+    riskLevel: 4
   }
 ];
 

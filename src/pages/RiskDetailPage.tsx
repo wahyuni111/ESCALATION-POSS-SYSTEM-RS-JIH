@@ -87,15 +87,71 @@ export const RiskDetailPage: React.FC<RiskDetailPageProps> = ({
         <div className="p-5 sm:p-6 grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* Kolom Kiri: Critical Lab Flags */}
           <div className="space-y-4">
-            <div className="rounded-xl border border-rose-200 bg-rose-50/60 p-4">
-              <div className="flex items-center gap-2 text-rose-900 font-bold text-xs uppercase tracking-wider mb-1.5">
-                <AlertTriangle className="w-4 h-4 text-rose-600" />
-                <span>Critical Lab Trigger (Pemicu Nilai Kritis):</span>
+            <div
+              className={`rounded-xl border p-4 ${
+                currentScenario.riskLevel === 4
+                  ? 'border-rose-200 bg-rose-50/60'
+                  : currentScenario.riskLevel === 3
+                  ? 'border-orange-200 bg-orange-50/60'
+                  : currentScenario.riskLevel === 2
+                  ? 'border-amber-200 bg-amber-50/60'
+                  : 'border-emerald-200 bg-emerald-50/60'
+              }`}
+            >
+              <div
+                className={`flex items-center gap-2 font-bold text-xs uppercase tracking-wider mb-1.5 ${
+                  currentScenario.riskLevel === 4
+                    ? 'text-rose-900'
+                    : currentScenario.riskLevel === 3
+                    ? 'text-orange-900'
+                    : currentScenario.riskLevel === 2
+                    ? 'text-amber-900'
+                    : 'text-emerald-900'
+                }`}
+              >
+                <AlertTriangle
+                  className={`w-4 h-4 ${
+                    currentScenario.riskLevel === 4
+                      ? 'text-rose-600'
+                      : currentScenario.riskLevel === 3
+                      ? 'text-orange-600'
+                      : currentScenario.riskLevel === 2
+                      ? 'text-amber-600'
+                      : 'text-emerald-600'
+                  }`}
+                />
+                <span>
+                  {currentScenario.riskLevel >= 3
+                    ? 'Critical Lab Trigger (Pemicu Nilai Kritis):'
+                    : currentScenario.riskLevel === 2
+                    ? 'Clinical Alert Trigger (Pemicu Kondisi Waspada):'
+                    : 'Target Parameter (Kriteria Kondisi Terkendali):'}
+                </span>
               </div>
-              <p className="text-sm font-bold text-rose-950 leading-snug">
+              <p
+                className={`text-sm font-bold leading-snug ${
+                  currentScenario.riskLevel === 4
+                    ? 'text-rose-950'
+                    : currentScenario.riskLevel === 3
+                    ? 'text-orange-950'
+                    : currentScenario.riskLevel === 2
+                    ? 'text-amber-950'
+                    : 'text-emerald-950'
+                }`}
+              >
                 {currentScenario.criticalLabTrigger}
               </p>
-              <div className="mt-2 text-xs text-rose-800 bg-white/80 border border-rose-200 rounded p-2 font-mono">
+              <div
+                className={`mt-2 text-xs bg-white/80 border rounded p-2 font-mono ${
+                  currentScenario.riskLevel === 4
+                    ? 'text-rose-800 border-rose-200'
+                    : currentScenario.riskLevel === 3
+                    ? 'text-orange-800 border-orange-200'
+                    : currentScenario.riskLevel === 2
+                    ? 'text-amber-800 border-amber-200'
+                    : 'text-emerald-800 border-emerald-200'
+                }`}
+              >
                 Contoh: {currentScenario.labThresholdExample}
               </div>
             </div>

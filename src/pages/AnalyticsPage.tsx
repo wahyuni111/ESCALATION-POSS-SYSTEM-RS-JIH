@@ -54,11 +54,11 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
     };
   });
 
-  // Skenario Paling Sering Di-trigger
+  // Skenario Paling Sering Di-trigger (Berdasarkan Rekam Medis & SBAR RS JIH Purwokerto)
   const scenarioTriggerFrequencies = [
     {
       id: 'sc-03',
-      title: 'Desaturasi SpO2 & Gagal Napas Mendadak (PaO2 Kritis)',
+      title: 'Desaturasi Oksigen Akut & Gagal Napas Mendadak (PaO2 Kritis)',
       accessCount: 42,
       percentage: 36,
       riskLevel: 4,
@@ -66,7 +66,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
     },
     {
       id: 'sc-01',
-      title: 'Henti Jantung / Aritmia Letal Akut (Kalium Ekstrim)',
+      title: 'Henti Jantung / Aritmia Letal Mengancam Nyawa (Kalium Kritis)',
       accessCount: 35,
       percentage: 30,
       riskLevel: 4,
@@ -74,19 +74,19 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
     },
     {
       id: 'sc-02',
-      title: 'Krisis Hiperglikemia Dekompensasi (GDS > 500 mg/dL)',
+      title: 'Krisis Hiperglikemia Bergejala Akut (KAD / HHS - GDS > 450 mg/dL)',
       accessCount: 24,
       percentage: 20,
       riskLevel: 3,
-      category: 'Penyakit Dalam'
+      category: 'Metabolik & Lab'
     },
     {
       id: 'sc-04',
-      title: 'Hiponatremia Berat & Waspada Kejang Akut',
+      title: 'Sepsis Warning & Gangguan Elektrolit Kritis (NEWS Tinggi)',
       accessCount: 16,
       percentage: 14,
       riskLevel: 3,
-      category: 'Elektrolit'
+      category: 'Sepsis & Infeksi'
     }
   ];
 
@@ -231,63 +231,69 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             </p>
 
             <div className="space-y-4">
-              {wardBreakdown.map((ward) => (
-                <div key={ward.name} className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-semibold text-slate-800">{ward.name}</span>
-                    <span className="text-slate-500 font-medium">
-                      {ward.total} Kamar Aktif
-                    </span>
-                  </div>
-
-                  {/* Multi-segment Bar */}
-                  <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden flex">
-                    {ward.critical > 0 && (
-                      <div
-                        style={{ width: `${(ward.critical / ward.total) * 100}%` }}
-                        className="bg-rose-600 h-full"
-                        title={`${ward.critical} Kritis`}
-                      />
-                    )}
-                    {ward.high > 0 && (
-                      <div
-                        style={{ width: `${(ward.high / ward.total) * 100}%` }}
-                        className="bg-orange-500 h-full"
-                        title={`${ward.high} Tinggi`}
-                      />
-                    )}
-                    {ward.moderate > 0 && (
-                      <div
-                        style={{ width: `${(ward.moderate / ward.total) * 100}%` }}
-                        className="bg-amber-400 h-full"
-                        title={`${ward.moderate} Sedang`}
-                      />
-                    )}
-                  </div>
-
-                  {/* Legenda Ringkas */}
-                  <div className="flex items-center gap-3 text-[10px] text-slate-500 pt-0.5">
-                    {ward.critical > 0 && (
-                      <span className="flex items-center gap-1">
-                        <span className="w-2 h-2 rounded-full bg-rose-600 inline-block" />
-                        {ward.critical} Level 4 (Kritis)
-                      </span>
-                    )}
-                    {ward.high > 0 && (
-                      <span className="flex items-center gap-1">
-                        <span className="w-2 h-2 rounded-full bg-orange-500 inline-block" />
-                        {ward.high} Level 3 (Tinggi)
-                      </span>
-                    )}
-                    {ward.moderate > 0 && (
-                      <span className="flex items-center gap-1">
-                        <span className="w-2 h-2 rounded-full bg-amber-400 inline-block" />
-                        {ward.moderate} Level 2 (Sedang)
-                      </span>
-                    )}
-                  </div>
+              {wardBreakdown.length === 0 ? (
+                <div className="py-8 text-center text-xs text-slate-400 border border-dashed border-slate-200 rounded-lg bg-slate-50/50">
+                  Seluruh bangsal terpantau aman tanpa peringatan kritis aktif saat ini.
                 </div>
-              ))}
+              ) : (
+                wardBreakdown.map((ward) => (
+                  <div key={ward.name} className="space-y-1.5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-semibold text-slate-800">{ward.name}</span>
+                      <span className="text-slate-500 font-medium">
+                        {ward.total} Kamar Aktif
+                      </span>
+                    </div>
+
+                    {/* Multi-segment Bar */}
+                    <div className="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden flex">
+                      {ward.critical > 0 && (
+                        <div
+                          style={{ width: `${(ward.critical / ward.total) * 100}%` }}
+                          className="bg-rose-600 h-full"
+                          title={`${ward.critical} Kritis`}
+                        />
+                      )}
+                      {ward.high > 0 && (
+                        <div
+                          style={{ width: `${(ward.high / ward.total) * 100}%` }}
+                          className="bg-orange-500 h-full"
+                          title={`${ward.high} Tinggi`}
+                        />
+                      )}
+                      {ward.moderate > 0 && (
+                        <div
+                          style={{ width: `${(ward.moderate / ward.total) * 100}%` }}
+                          className="bg-amber-400 h-full"
+                          title={`${ward.moderate} Sedang`}
+                        />
+                      )}
+                    </div>
+
+                    {/* Legenda Ringkas */}
+                    <div className="flex items-center gap-3 text-[10px] text-slate-500 pt-0.5">
+                      {ward.critical > 0 && (
+                        <span className="flex items-center gap-1">
+                          <span className="w-2 h-2 rounded-full bg-rose-600 inline-block" />
+                          {ward.critical} Level 4 (Kritis)
+                        </span>
+                      )}
+                      {ward.high > 0 && (
+                        <span className="flex items-center gap-1">
+                          <span className="w-2 h-2 rounded-full bg-orange-500 inline-block" />
+                          {ward.high} Level 3 (Tinggi)
+                        </span>
+                      )}
+                      {ward.moderate > 0 && (
+                        <span className="flex items-center gap-1">
+                          <span className="w-2 h-2 rounded-full bg-amber-400 inline-block" />
+                          {ward.moderate} Level 2 (Sedang)
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
 
@@ -309,7 +315,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
                   Protokol Mandiri Sering Di-trigger
                 </h3>
               </div>
-              <span className="text-[11px] text-slate-500">Frekuensi Akses</span>
+              <span className="text-[11px] text-slate-500 font-semibold">Frekuensi Akses</span>
             </div>
 
             <p className="text-xs text-slate-500 mt-2 mb-4">
@@ -317,51 +323,58 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
             </p>
 
             <div className="space-y-3.5">
-              {scenarioTriggerFrequencies.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => handleScenarioClick(item.id)}
-                  className="group cursor-pointer p-2.5 rounded-lg border border-slate-100 hover:border-slate-300 hover:bg-slate-50/70 transition-all"
-                >
-                  <div className="flex items-center justify-between text-xs mb-1.5">
-                    <span className="font-semibold text-slate-800 group-hover:text-jih-blue transition-colors truncate">
-                      {item.title}
-                    </span>
-                    <span className="text-slate-500 font-medium shrink-0 ml-2">
-                      {item.accessCount} kali ({item.percentage}%)
-                    </span>
-                  </div>
+              {scenarioTriggerFrequencies.map((item) => {
+                const maxCount = scenarioTriggerFrequencies[0]?.accessCount || 42;
+                const relativeWidth = Math.round((item.accessCount / maxCount) * 100);
 
-                  <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
-                    <div
-                      style={{ width: `${item.percentage * 2}%` }}
-                      className={`h-full rounded-full transition-all ${
-                        item.riskLevel === 4
-                          ? 'bg-rose-600'
-                          : item.riskLevel === 3
-                          ? 'bg-orange-500'
-                          : 'bg-jih-blue'
-                      }`}
-                    />
-                  </div>
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => handleScenarioClick(item.id)}
+                    className="group cursor-pointer p-3 rounded-xl border border-slate-200/80 hover:border-jih-blue/50 hover:bg-slate-50/70 transition-all shadow-2xs"
+                  >
+                    <div className="flex items-start justify-between text-xs mb-2 gap-2">
+                      <span className="font-semibold text-slate-900 group-hover:text-jih-blue transition-colors line-clamp-1">
+                        {item.title}
+                      </span>
+                      <span className="text-slate-600 font-bold shrink-0 font-mono text-[11px]">
+                        {item.accessCount} kali <span className="text-slate-400 font-normal">({item.percentage}%)</span>
+                      </span>
+                    </div>
 
-                  <div className="flex items-center justify-between text-[10px] text-slate-500 mt-1.5">
-                    <span className="uppercase font-semibold tracking-wider text-slate-400">
-                      Kategori: {item.category}
-                    </span>
-                    <span className="text-jih-blue font-semibold group-hover:underline flex items-center gap-0.5">
-                      Buka Panduan SBAR
-                      <ArrowUpRight className="w-3 h-3" />
-                    </span>
+                    <div className="h-2 w-full bg-slate-100 rounded-full overflow-hidden">
+                      <div
+                        style={{ width: `${relativeWidth}%` }}
+                        className={`h-full rounded-full transition-all duration-500 ${
+                          item.riskLevel === 4
+                            ? 'bg-rose-600'
+                            : item.riskLevel === 3
+                            ? 'bg-orange-500'
+                            : 'bg-jih-blue'
+                        }`}
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2">
+                      <span className="uppercase text-[10px] font-bold tracking-wider text-slate-500 bg-slate-100 px-1.5 py-0.5 rounded">
+                        Kategori: {item.category}
+                      </span>
+                      <span className="text-jih-blue font-semibold group-hover:underline flex items-center gap-0.5 text-xs">
+                        Buka Panduan SBAR
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
           <div className="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-500 flex items-center justify-between">
             <span>Divalidasi Komite Medik:</span>
-            <span className="font-medium text-slate-700">dr. Sp.JP & dr. Sp.P (Aktif)</span>
+            <span className="font-semibold text-slate-800">
+              dr. H. Prasetyo, Sp.JP, FIHA & dr. Fajar Nugroho, Sp.P
+            </span>
           </div>
         </div>
       </div>
@@ -396,7 +409,8 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({
               <option value="Orchid">Bangsal Orchid</option>
               <option value="Olive">Bangsal Olive</option>
               <option value="Lily">Bangsal Lily</option>
-              <option value="ICU">Intensive Care Unit</option>
+              <option value="ICU">Intensive Care Unit (ICU)</option>
+              <option value="IGD">Instalasi Gawat Darurat (IGD)</option>
             </select>
           </div>
         </div>

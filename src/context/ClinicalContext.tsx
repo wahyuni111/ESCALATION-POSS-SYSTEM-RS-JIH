@@ -274,6 +274,8 @@ interface ClinicalContextType {
   labRecords: LabTestRecord[];
   dispatchLabResult: (data: DispatchLabPayload) => void;
   deleteLabRecord: (recordId: string, resetRoom?: boolean) => void;
+  deleteRoom: (roomId: string) => void;
+  clearNormalRooms: () => void;
   resetPatientRoomStatus: (roomId: string) => void;
   lastNotification: string | null;
   clearNotification: () => void;
@@ -325,7 +327,9 @@ export const ClinicalProvider: React.FC<{ children: ReactNode }> = ({ children }
   }, [labRecords]);
 
   const dispatchLabResult = (data: DispatchLabPayload) => {
-    const targetRoom = rooms.find((r) => r.id === data.patientRoomId);
+    const targetRoom =
+      rooms.find((r) => r.id === data.patientRoomId) ||
+      DUMMY_WARD_ROOMS.find((r) => r.id === data.patientRoomId);
     const roomName = targetRoom ? targetRoom.roomNumber : 'Ruangan Pasien';
     const wardName = targetRoom ? targetRoom.wardName : 'Bangsal Rawat';
     const patientName = targetRoom ? `${targetRoom.patientInitials} (${targetRoom.ageGender})` : 'Pasien';
@@ -364,29 +368,57 @@ export const ClinicalProvider: React.FC<{ children: ReactNode }> = ({ children }
     // Update antrean log laboratorium
     setLabRecords((prev) => [newRecord, ...prev]);
 
-    // Update status pasien di ruangan bangsal secara langsung
-    setRooms((prevRooms) =>
-      prevRooms.map((room) => {
-        if (room.id === data.patientRoomId) {
-          return {
-            ...room,
-            rmNumber: data.rm,
-            episodeNumber: data.eps,
-            noLab: data.noLab,
-            layananPanel: data.layanan,
-            riskLevel: data.riskLevel,
-            criticalFlag: `${data.pemeriksaan} ${data.hasil} ${data.satuan} (${data.flagKritis}) ${data.layanan}`,
-            urgentActionNeeded: data.urgentActionNeeded,
-            independentActionAllowed: data.independentActionAllowed,
-            doctorInCharge: data.dokter,
-            nurseReceiver: data.namaPerawat,
-            reportedAt: data.jamDilapor,
-            timeElapsedMinutes: 1
-          };
-        }
-        return room;
-      })
-    );
+    // Update status pasien di ruangan bangsal secara langsung (atau tambahkan kamar baru jika belum aktif di dasbor)
+    setRooms((prevRooms) => {
+      const exists = prevRooms.some((r) => r.id === data.patientRoomId);
+      if (exists) {
+        return prevRooms.map((room) => {
+          if (room.id === data.patientRoomId) {
+            return {
+              ...room,
+              rmNumber: data.rm,
+              episodeNumber: data.eps,
+              noLab: data.noLab,
+              layananPanel: data.layanan,
+              riskLevel: data.riskLevel,
+              criticalFlag: `${data.pemeriksaan} ${data.hasil} ${data.satuan} (${data.flagKritis}) ${data.layanan}`,
+              urgentActionNeeded: data.urgentActionNeeded,
+              independentActionAllowed: data.independentActionAllowed,
+              doctorInCharge: data.dokter,
+              nurseReceiver: data.namaPerawat,
+              reportedAt: data.jamDilapor,
+              timeElapsedMinutes: 1
+            };
+          }
+          return room;
+        });
+      } else {
+        const master = DUMMY_WARD_ROOMS.find((r) => r.id === data.patientRoomId);
+        const newRoom: WardRoom = {
+          id: data.patientRoomId || `room-${Date.now()}`,
+          roomNumber: master ? master.roomNumber : roomName,
+          wardName: master ? master.wardName : wardName,
+          patientInitials: master ? master.patientInitials : 'Tn. Pasien',
+          ageGender: master ? master.ageGender : 'Dewasa',
+          rmNumber: data.rm,
+          episodeNumber: data.eps,
+          noLab: data.noLab,
+          layananPanel: data.layanan,
+          currentDiagnosis: master ? master.currentDiagnosis : (data.clinicalNote || 'Kasus Kritis LIS'),
+          scenarioId: master ? master.scenarioId : 'sc-01',
+          riskLevel: data.riskLevel,
+          criticalFlag: `${data.pemeriksaan} ${data.hasil} ${data.satuan} (${data.flagKritis}) ${data.layanan}`,
+          urgentActionNeeded: data.urgentActionNeeded,
+          independentActionAllowed: data.independentActionAllowed,
+          doctorInCharge: data.dokter,
+          doctorStatus: master ? master.doctorStatus : 'Visite Ruang Lain',
+          nurseReceiver: data.namaPerawat,
+          reportedAt: data.jamDilapor,
+          timeElapsedMinutes: 1
+        };
+        return [newRoom, ...prevRooms];
+      }
+    });
 
     setLastNotification(
       `Hasil lab ${data.pemeriksaan} (${data.hasil} ${data.satuan} - Flag ${data.flagKritis}) untuk ${roomName} (RM ${data.rm}) berhasil diverifikasi & dikirim ke perawat ${data.namaPerawat} di ${wardName}!`
@@ -401,26 +433,32 @@ export const ClinicalProvider: React.FC<{ children: ReactNode }> = ({ children }
     setLabRecords((prev) => prev.filter((r) => r.id !== recordId));
 
     if (resetRoom && targetRecord.patientRoomId) {
-      // Normalisasikan status kamar pasien terkait di dasbor perawat
+      // Hapus kartu kamar pasien terkait dari dasbor bangsal
       setRooms((prevRooms) =>
-        prevRooms.map((room) => {
-          if (room.id === targetRecord.patientRoomId) {
-            return {
-              ...room,
-              riskLevel: 1,
-              criticalFlag: 'Tanda Vital & Hasil Lab Terpantau Normal Pasca-Evaluasi',
-              urgentActionNeeded: 'Monitoring Rutin Terjadwal Tiap 8 Jam per Shift',
-              independentActionAllowed: 'Diizinkan Mandiri: Observasi Keperawatan Standar, Edukasi Asupan Hidrasi Oral, Pencatatan Rekam Medis',
-              timeElapsedMinutes: 1
-            };
-          }
-          return room;
-        })
+        prevRooms.filter((room) => room.id !== targetRecord.patientRoomId)
       );
     }
 
     setLastNotification(
-      `Data hasil lab ${targetRecord.pemeriksaan} untuk ${targetRecord.roomNumber} (RM ${targetRecord.rm}) telah berhasil dihapus. Status kamar di dasbor perawat otomatis dinormalkan.`
+      `Data hasil lab ${targetRecord.pemeriksaan} untuk ${targetRecord.roomNumber} (RM ${targetRecord.rm}) telah berhasil dihapus. Kartu kamar otomatis dihilangkan dari papan kendali bangsal.`
+    );
+  };
+
+  const deleteRoom = (roomId: string) => {
+    const targetRoom = rooms.find((r) => r.id === roomId);
+    const roomName = targetRoom ? targetRoom.roomNumber : 'Kamar Pasien';
+
+    setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
+    setLastNotification(
+      `Kamar ${roomName} telah berhasil dihapus dari papan pantau bangsal.`
+    );
+  };
+
+  const clearNormalRooms = () => {
+    const normalCount = rooms.filter((r) => r.riskLevel === 1).length;
+    setRooms((prevRooms) => prevRooms.filter((room) => room.riskLevel !== 1));
+    setLastNotification(
+      `${normalCount} kamar dengan status stabil/normal telah dibersihkan dari papan kendali.`
     );
   };
 
@@ -466,6 +504,8 @@ export const ClinicalProvider: React.FC<{ children: ReactNode }> = ({ children }
         labRecords,
         dispatchLabResult,
         deleteLabRecord,
+        deleteRoom,
+        clearNormalRooms,
         resetPatientRoomStatus,
         lastNotification,
         clearNotification,

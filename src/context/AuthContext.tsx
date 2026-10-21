@@ -8,7 +8,7 @@ export const DEMO_USERS: UserProfile[] = [
     nip: 'JIH-PWT-2021-084',
     role: 'Perawat Pelaksana Bangsal',
     roleType: 'nurse',
-    ward: 'Bangsal Melati (Rawat Inap Bedah & Dalam)',
+    ward: 'Bangsal Tulip (Kelas VIP)',
     shift: 'Shift Sore (14.00 - 21.00)'
   },
   {

@@ -256,8 +256,23 @@ export const SearchPage: React.FC<SearchPageProps> = ({
                   {sc.title}
                 </h3>
 
-                <div className="text-xs text-rose-900 font-semibold bg-rose-50/70 border border-rose-200 rounded-md px-2.5 py-1 inline-block max-w-full truncate">
-                  Pemicu Nilai Kritis: {sc.criticalLabTrigger}
+                <div
+                  className={`text-xs font-semibold rounded-md px-2.5 py-1 inline-block max-w-full truncate border ${
+                    sc.riskLevel === 4
+                      ? 'text-rose-950 bg-rose-50/80 border-rose-200'
+                      : sc.riskLevel === 3
+                      ? 'text-orange-950 bg-orange-50/80 border-orange-200'
+                      : sc.riskLevel === 2
+                      ? 'text-amber-950 bg-amber-50/80 border-amber-200'
+                      : 'text-emerald-950 bg-emerald-50/80 border-emerald-200'
+                  }`}
+                >
+                  {sc.riskLevel >= 3
+                    ? 'Pemicu Nilai Kritis: '
+                    : sc.riskLevel === 2
+                    ? 'Pemicu Kondisi Waspada: '
+                    : 'Kriteria Kondisi Terkendali: '}
+                  {sc.criticalLabTrigger}
                 </div>
 
                 <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">

@@ -13,9 +13,10 @@ import {
   Search
 } from 'lucide-react';
 import { useClinical } from '../context/ClinicalContext';
-import { useAuth } from '../context/AuthContext';
-import { RiskLevel } from '../types/clinical';
+import { useAuth, DEMO_USERS } from '../context/AuthContext';
+import { RiskLevel, WardRoom } from '../types/clinical';
 import { PageId } from '../components/layout/Sidebar';
+import { DUMMY_WARD_ROOMS } from '../data/dummyWards';
 
 interface LabDispatchPageProps {
   onNavigate: (page: PageId) => void;
@@ -23,6 +24,7 @@ interface LabDispatchPageProps {
 }
 
 interface QuickPreset {
+  roomId?: string;
   name: string;
   rm: string;
   eps: string;
@@ -45,6 +47,7 @@ interface QuickPreset {
 
 const PRESETS: QuickPreset[] = [
   {
+    roomId: 'room-tulip-302',
     name: 'PO2 42 mm Hg (AGD VIP - Hipoksemia Berat)',
     rm: '14437',
     eps: '21',
@@ -58,13 +61,14 @@ const PRESETS: QuickPreset[] = [
     riskLevel: 4,
     jamTemu: '12:05',
     jamDilapor: '12/03/2025 12:14:22',
-    namaPerawat: 'Uji Prihatiningsih',
+    namaPerawat: 'Ns. Siti Rahayu, S.Kep',
     dokter: 'dr. Ghea, Sp.PD',
     clinicalNote: 'Hipoksemia berat terverifikasi duplo pada sampel darah arteri. Berisiko gagal napas akut.',
     urgentActionNeeded: 'Desaturasi Berat: Berikan Oksigenasi Sungkup NRM 15 Lpm & Posisi Duduk Tegak',
     independentActionAllowed: 'Diizinkan Mandiri: Berikan Oksigen NRM 12-15 Lpm, Posisikan Semi-Fowler Tegak, Siapkan Suction Lendir'
   },
   {
+    roomId: 'room-tulip-306',
     name: 'Glukosa Sewaktu 831.36 mg/dL (GDS VIP - Krisis KAD)',
     rm: '1204',
     eps: '109',
@@ -78,13 +82,14 @@ const PRESETS: QuickPreset[] = [
     riskLevel: 3,
     jamTemu: '07:11',
     jamDilapor: '19/04/2025 07:15:30',
-    namaPerawat: 'Diah Kartika, AMK',
+    namaPerawat: 'Ns. Siti Rahayu, S.Kep',
     dokter: 'dr. Pugud, Sp.PD',
     clinicalNote: 'Hiperglikemia ekstrim > 800 mg/dL. Kecurigaan komplikasi Ketoasidosis Diabetik / HHS.',
     urgentActionNeeded: 'Krisis Hiperglikemia: Evaluasi Turgor Kulit, Mulai Hidrasi IV Kristaloid',
     independentActionAllowed: 'Diizinkan Mandiri: Pasang IV Bore Besar, Guyur Cairan NaCl 0.9% 1000 mL dalam 1 Jam Sesuai Standing Order'
   },
   {
+    roomId: 'room-tulip-302',
     name: 'Natrium 118.3 mmol/L (Elektrolit VIP - Hiponatremia Kritis)',
     rm: '14437',
     eps: '21',
@@ -98,13 +103,14 @@ const PRESETS: QuickPreset[] = [
     riskLevel: 4,
     jamTemu: '12:08',
     jamDilapor: '12/03/2025 12:14:22',
-    namaPerawat: 'Uji Prihatiningsih',
+    namaPerawat: 'Ns. Siti Rahayu, S.Kep',
     dokter: 'dr. Ghea, Sp.PD',
     clinicalNote: 'Hiponatremia berat di bawah 120 mmol/L. Waspada kejang dan herniasi serebral.',
     urgentActionNeeded: 'Hiponatremia Akut Kritis: Pasang Bed-Rail Kejang & Restriksi Cairan Bebas Segera',
     independentActionAllowed: 'Diizinkan Mandiri: Pasang Pengaman Tempat Tidur Anti-Kejang, Nilai Kesadaran GCS, Siapkan Akses Salin Normal'
   },
   {
+    roomId: 'room-icu-01',
     name: 'PCO2 > 130.0 mm Hg (AGD ICU - Asidosis Ekstrim)',
     rm: '16240',
     eps: '3',
@@ -118,13 +124,14 @@ const PRESETS: QuickPreset[] = [
     riskLevel: 4,
     jamTemu: '04:48',
     jamDilapor: '10/04/2025 04:55:10',
-    namaPerawat: 'Vita Anggis, S.Kep., Ners',
+    namaPerawat: 'Ns. Ahmad Fauzi, A.Md.Kep',
     dokter: 'dr. Cempaka, Sp.P',
     clinicalNote: 'Hiperkapnia masif disertai pH ekstrim < 6.500. Kondisi henti napas iminen.',
     urgentActionNeeded: 'Asidosis Respiratorik Kritis: Ventilasi Tekanan Positif / Panggil Tim Code Blue',
     independentActionAllowed: 'Diizinkan Mandiri: Bagging Ventilasi BVM 100% O2 Kualitas Tinggi, Panggil Tim Code Blue ICU Segera'
   },
   {
+    roomId: 'room-olive-102',
     name: 'Trombosit 16 x 10^3/µL (Darah Rutin - Trombositopenia)',
     rm: '20638',
     eps: '2',
@@ -138,13 +145,14 @@ const PRESETS: QuickPreset[] = [
     riskLevel: 3,
     jamTemu: '23:02',
     jamDilapor: '27/01/2025 23:09:09',
-    namaPerawat: 'Tri Harningsih, S.Kep., Ns',
+    namaPerawat: 'Ns. Siti Rahayu, S.Kep',
     dokter: 'dr. Nadia, Sp.PD',
     clinicalNote: 'Trombositopenia kritis di bawah 20 ribu. Ancaman perdarahan spontan mukosa dan GIT.',
     urgentActionNeeded: 'Waspada Perdarahan Spontan: Tirah Baring Mutlak & Hindari Injeksi IM',
     independentActionAllowed: 'Diizinkan Mandiri: Tirah Baring Total, Edukasi Pasien Hindari Mengejan/Sikat Gigi Keras, Siapkan Sampel Crossmatch TC'
   },
   {
+    roomId: 'room-icu-01',
     name: 'HS Troponin I 2.258 ng/mL (Troponin ICU - Infark Miokard)',
     rm: '2553',
     eps: '12',
@@ -158,13 +166,14 @@ const PRESETS: QuickPreset[] = [
     riskLevel: 4,
     jamTemu: '07:18',
     jamDilapor: '31/10/2025 07:21:50',
-    namaPerawat: 'Syarah Nur Hayah, S.Kep., Ns',
+    namaPerawat: 'Ns. Ahmad Fauzi, A.Md.Kep',
     dokter: 'dr. Ghea, Sp.PD',
     clinicalNote: 'Peningkatan biomarker nekrosis miokard > 50x nilai rujukan normal.',
     urgentActionNeeded: 'Ancaman Infark Miokard: Rekam EKG 12 Lead Segera & Berikan Tirah Baring Total',
     independentActionAllowed: 'Diizinkan Mandiri: Perekaman EKG 12 Lead dalam 10 Menit, Oksigen Kanul 3-4 Lpm jika SpO2 < 90%, Posisikan Nyaman'
   },
   {
+    roomId: 'room-tulip-302',
     name: 'Bilirubin Total 33.38 mg/dL (Kimia VIP - Ikterik Akut)',
     rm: '14437',
     eps: '28',
@@ -178,13 +187,14 @@ const PRESETS: QuickPreset[] = [
     riskLevel: 3,
     jamTemu: '08:05',
     jamDilapor: '09/04/2025 08:13:00',
-    namaPerawat: 'Uji Prihatiningsih',
+    namaPerawat: 'Ns. Siti Rahayu, S.Kep',
     dokter: 'dr. Ghea, Sp.PD',
     clinicalNote: 'Hiperbilirubinemia berat dengan sklera ikterik pekat. Dugaan kolestasis obstruktif akut.',
     urgentActionNeeded: 'Krisis Ikterik: Evaluasi Tanda Ensefalopati Hepatikum & Pantau Output Urin',
     independentActionAllowed: 'Diizinkan Mandiri: Tirah Baring, Catat Balans Cairan Ketat, Hindari Sedatif Berat Sesuai Protokol Ruang Rawat'
   },
   {
+    roomId: 'room-tulip-302',
     name: 'Evaluasi Pasca-Koreksi Normal (Kalium 4.2 mEq/L)',
     rm: '14437',
     eps: '21',
@@ -198,7 +208,7 @@ const PRESETS: QuickPreset[] = [
     riskLevel: 1,
     jamTemu: '14:20',
     jamDilapor: 'Hari ini, 14:25 WIB',
-    namaPerawat: 'Uji Prihatiningsih',
+    namaPerawat: 'Ns. Tri Wahyuni, S.Kep',
     dokter: 'dr. Ghea, Sp.PD',
     clinicalNote: 'Elektrolit kembali dalam batas normal pasca-koreksi kalium drip.',
     urgentActionNeeded: 'Monitoring Rutin Terjadwal Tiap 8 Jam per Shift',
@@ -206,17 +216,8 @@ const PRESETS: QuickPreset[] = [
   }
 ];
 
-const NURSE_RECEIVER_OPTIONS = [
-  'Uji Prihatiningsih',
-  'Vita Anggis, S.Kep., Ners',
-  'Diah Kartika, AMK',
-  'Shinta Pramudya, S.Kep., Ns',
-  'Tri Harningsih, S.Kep., Ns',
-  'Kiki Septiana Hermawan, S.Kep., Ns',
-  'Syarah Nur Hayah, S.Kep., Ns',
-  'Rinjani Widya Saraswati, Amd.Kep',
-  'Nurul Chafifah'
-];
+// 4 Akun perawat yang resmi terdaftar di sistem login (DEMO_USERS)
+const REGISTERED_NURSE_ACCOUNTS = DEMO_USERS.filter((u) => u.roleType !== 'laboran');
 
 const DOCTOR_OPTIONS = [
   'dr. Ghea, Sp.PD',
@@ -224,7 +225,10 @@ const DOCTOR_OPTIONS = [
   'dr. Pugud, Sp.PD',
   'dr. Cempaka, Sp.P',
   'dr. Agus, Sp.A (K)',
-  'dr. Yudha, Sp.A'
+  'dr. Yudha, Sp.A',
+  'dr. H. Prasetyo, Sp.JP, FIHA',
+  'dr. Anisa Rahmawati, Sp.PD, K-EMD',
+  'dr. Hendra Wicaksono, Sp.B, FICS'
 ];
 
 export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) => {
@@ -240,9 +244,24 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
   } = useClinical();
   const { currentUser } = useAuth();
 
+  // Nama analis laboran pelapor otomatis terkunci sesuai akun laboran yang sedang login
+  const activeLaboranName =
+    currentUser?.roleType === 'laboran' && currentUser?.name
+      ? currentUser.name
+      : 'Analis Hendra Kurniawan, A.Md.AK';
+
+  // Selalu sediakan master kamar RS JIH agar pilihan kamar tidak pernah kosong
+  const masterRooms = DUMMY_WARD_ROOMS;
+  const roomMap = new Map<string, WardRoom>();
+  masterRooms.forEach((r) => roomMap.set(r.id, r));
+  rooms.forEach((r) => roomMap.set(r.id, r));
+  const selectableRooms = Array.from(roomMap.values());
+
   // Selected room
-  const [selectedRoomId, setSelectedRoomId] = useState<string>(rooms[0]?.id || 'room-tulip-302');
-  const selectedRoom = rooms.find((r) => r.id === selectedRoomId);
+  const [selectedRoomId, setSelectedRoomId] = useState<string>(() => {
+    return rooms[0]?.id || selectableRooms[0]?.id || 'room-tulip-302';
+  });
+  const selectedRoom = selectableRooms.find((r) => r.id === selectedRoomId) || selectableRooms[0];
 
   // Form Fields based on RS JIH LAB009
   const [rm, setRm] = useState<string>(selectedRoom?.rmNumber || '14437');
@@ -259,10 +278,9 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
   // Timestamps & Communicators
   const [jamTemu, setJamTemu] = useState<string>('12:05');
   const [jamDilapor, setJamDilapor] = useState<string>('12/03/2025 12:14:22');
-  const [dilaporOleh, setDilaporOleh] = useState<string>(
-    currentUser?.name || 'Analis Hendra Kurniawan, A.Md.AK'
+  const [namaPerawat, setNamaPerawat] = useState<string>(
+    REGISTERED_NURSE_ACCOUNTS[0]?.name || 'Ns. Siti Rahayu, S.Kep'
   );
-  const [namaPerawat, setNamaPerawat] = useState<string>(selectedRoom?.nurseReceiver || 'Uji Prihatiningsih');
   const [dokter, setDokter] = useState<string>(selectedRoom?.doctorInCharge || 'dr. Ghea, Sp.PD');
 
   // Clinical Guidance (CDS)
@@ -292,6 +310,9 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
   }, [selectedRoomId]);
 
   const applyPreset = (preset: QuickPreset) => {
+    if (preset.roomId) {
+      setSelectedRoomId(preset.roomId);
+    }
     setRm(preset.rm);
     setEps(preset.eps);
     setNoLab(preset.noLab);
@@ -336,7 +357,7 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
       satuan,
       jamTemu,
       jamDilapor,
-      dilaporOleh,
+      dilaporOleh: activeLaboranName,
       namaPerawat,
       dokter,
       referenceRange,
@@ -466,11 +487,14 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
                   onChange={(e) => setSelectedRoomId(e.target.value)}
                   className="w-full bg-white border border-slate-200 rounded-lg p-2.5 font-semibold text-slate-800 outline-none text-xs hover:border-slate-300 focus:border-jih-blue transition-colors"
                 >
-                  {rooms.map((room) => (
-                    <option key={room.id} value={room.id}>
-                      {room.roomNumber} - {room.patientInitials} ({room.ageGender}) • {room.wardName} (RM: {room.rmNumber || '-'})
-                    </option>
-                  ))}
+                  {selectableRooms.map((room) => {
+                    const isActive = rooms.some((r) => r.id === room.id);
+                    return (
+                      <option key={room.id} value={room.id}>
+                        {room.roomNumber} - {room.patientInitials} ({room.ageGender}) • {room.wardName} (RM: {room.rmNumber || '-'}{isActive ? ' • Aktif di Dasbor' : ''})
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
 
@@ -717,60 +741,53 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
                 <div>
-                  <label htmlFor="dilapor-oleh" className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                    Dilapor Oleh (Laboran):
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
+                    Dilapor Oleh (Laboran Login):
                   </label>
-                  <input
-                    id="dilapor-oleh"
-                    type="text"
-                    value={dilaporOleh}
-                    onChange={(e) => setDilaporOleh(e.target.value)}
-                    className="w-full bg-white border border-slate-200 rounded p-1.5 text-xs text-slate-900 outline-none focus:border-jih-blue"
-                    placeholder="Nama Analis"
-                    required
-                  />
+                  <div className="flex items-center justify-between bg-slate-100 border border-slate-200 rounded p-1.5 text-xs text-slate-900 font-semibold shadow-2xs">
+                    <span className="truncate">{activeLaboranName}</span>
+                    <span className="text-[9px] font-semibold text-amber-800 bg-amber-100/90 px-1.5 py-0.5 rounded shrink-0 ml-1">
+                      Akun Aktif
+                    </span>
+                  </div>
                 </div>
 
                 <div>
                   <label htmlFor="nama-perawat" className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                    Terima Oleh (Nama Perawat):
+                    Terima Oleh (4 Perawat Akun):
                   </label>
-                  <input
+                  <select
                     id="nama-perawat"
-                    type="text"
-                    list="nurses-list"
                     value={namaPerawat}
                     onChange={(e) => setNamaPerawat(e.target.value)}
-                    className="w-full bg-white border border-slate-200 rounded p-1.5 text-xs text-slate-900 outline-none focus:border-jih-blue font-semibold"
-                    placeholder="Pilih atau ketik perawat"
+                    className="w-full bg-white border border-slate-200 rounded p-1.5 text-xs text-slate-900 outline-none focus:border-jih-blue font-semibold transition-colors"
                     required
-                  />
-                  <datalist id="nurses-list">
-                    {NURSE_RECEIVER_OPTIONS.map((n) => (
-                      <option key={n} value={n} />
+                  >
+                    {REGISTERED_NURSE_ACCOUNTS.map((nurse) => (
+                      <option key={nurse.id} value={nurse.name}>
+                        {nurse.name} • {nurse.ward.split('(')[0].trim()}
+                      </option>
                     ))}
-                  </datalist>
+                  </select>
                 </div>
 
                 <div>
                   <label htmlFor="dokter-dpjp" className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
                     Dokter DPJP Pasien:
                   </label>
-                  <input
+                  <select
                     id="dokter-dpjp"
-                    type="text"
-                    list="doctors-list"
                     value={dokter}
                     onChange={(e) => setDokter(e.target.value)}
-                    className="w-full bg-white border border-slate-200 rounded p-1.5 text-xs text-slate-900 outline-none focus:border-jih-blue font-semibold"
-                    placeholder="dr. Ghea, Sp.PD"
+                    className="w-full bg-white border border-slate-200 rounded p-1.5 text-xs text-slate-900 outline-none focus:border-jih-blue font-semibold transition-colors"
                     required
-                  />
-                  <datalist id="doctors-list">
-                    {DOCTOR_OPTIONS.map((d) => (
-                      <option key={d} value={d} />
+                  >
+                    {DOCTOR_OPTIONS.map((doc) => (
+                      <option key={doc} value={doc}>
+                        {doc}
+                      </option>
                     ))}
-                  </datalist>
+                  </select>
                 </div>
               </div>
             </div>
@@ -1020,10 +1037,10 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
                       type="button"
                       onClick={() => deleteLabRecord(record.id, true)}
                       className="inline-flex items-center gap-1 text-[11px] font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-2 py-1 rounded transition-colors"
-                      title="Hapus riwayat lab ini dan kembalikan status kamar perawat ke kondisi stabil"
+                      title="Hapus riwayat lab ini dan hilangkan kartu kamar pasien terkait dari dasbor bangsal"
                     >
                       <Trash2 className="w-3 h-3 text-rose-600" aria-hidden="true" />
-                      <span>Hapus & Normalkan</span>
+                      <span>Hapus dari Dasbor & LIS</span>
                     </button>
                   </td>
                 </tr>
