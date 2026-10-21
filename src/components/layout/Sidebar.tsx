@@ -4,7 +4,6 @@ import {
   Search,
   Activity,
   FileCheck2,
-  BarChart3,
   FlaskConical,
   Cpu,
   Settings,
@@ -23,7 +22,6 @@ export type PageId =
   | 'search'
   | 'risk-detail'
   | 'guideline'
-  | 'analytics'
   | 'model-manager'
   | 'settings';
 
@@ -69,12 +67,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       icon: FlaskConical,
       badge: 'Role Anda',
       highlight: true
-    },
-    {
-      id: 'analytics',
-      label: 'Analitik & Kepatuhan',
-      sublabel: 'Beban Risiko & Audit SBAR',
-      icon: BarChart3
     }
   ];
 
@@ -85,12 +77,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       sublabel: 'Peta Ruang & Skenario Aktif',
       icon: LayoutDashboard,
       badge: '6 Ruang'
-    },
-    {
-      id: 'analytics',
-      label: 'Analitik & Kepatuhan',
-      sublabel: 'Beban Risiko & Audit SBAR',
-      icon: BarChart3
     },
     {
       id: 'search',

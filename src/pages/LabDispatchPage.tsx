@@ -36,7 +36,6 @@ interface QuickPreset {
   satuan: string;
   referenceRange: string;
   riskLevel: RiskLevel;
-  jamTemu: string;
   jamDilapor: string;
   namaPerawat: string;
   dokter: string;
@@ -59,9 +58,8 @@ const PRESETS: QuickPreset[] = [
     satuan: 'mm Hg',
     referenceRange: '80 - 100 mm Hg',
     riskLevel: 4,
-    jamTemu: '12:05',
     jamDilapor: '12/03/2025 12:14:22',
-    namaPerawat: 'Ns. Siti Rahayu, S.Kep',
+    namaPerawat: 'Ns. Uji Prihatiningsih, S.Kep',
     dokter: 'dr. Ghea, Sp.PD',
     clinicalNote: 'Hipoksemia berat terverifikasi duplo pada sampel darah arteri. Berisiko gagal napas akut.',
     urgentActionNeeded: 'Desaturasi Berat: Berikan Oksigenasi Sungkup NRM 15 Lpm & Posisi Duduk Tegak',
@@ -80,9 +78,8 @@ const PRESETS: QuickPreset[] = [
     satuan: 'mg/dL',
     referenceRange: '70 - 140 mg/dL',
     riskLevel: 3,
-    jamTemu: '07:11',
     jamDilapor: '19/04/2025 07:15:30',
-    namaPerawat: 'Ns. Siti Rahayu, S.Kep',
+    namaPerawat: 'Ns. Diah Kartika, AMK',
     dokter: 'dr. Pugud, Sp.PD',
     clinicalNote: 'Hiperglikemia ekstrim > 800 mg/dL. Kecurigaan komplikasi Ketoasidosis Diabetik / HHS.',
     urgentActionNeeded: 'Krisis Hiperglikemia: Evaluasi Turgor Kulit, Mulai Hidrasi IV Kristaloid',
@@ -101,9 +98,8 @@ const PRESETS: QuickPreset[] = [
     satuan: 'mmol/L',
     referenceRange: '135 - 147 mmol/L',
     riskLevel: 4,
-    jamTemu: '12:08',
     jamDilapor: '12/03/2025 12:14:22',
-    namaPerawat: 'Ns. Siti Rahayu, S.Kep',
+    namaPerawat: 'Ns. Uji Prihatiningsih, S.Kep',
     dokter: 'dr. Ghea, Sp.PD',
     clinicalNote: 'Hiponatremia berat di bawah 120 mmol/L. Waspada kejang dan herniasi serebral.',
     urgentActionNeeded: 'Hiponatremia Akut Kritis: Pasang Bed-Rail Kejang & Restriksi Cairan Bebas Segera',
@@ -122,9 +118,8 @@ const PRESETS: QuickPreset[] = [
     satuan: 'mm Hg',
     referenceRange: '35.0 - 45.0 mm Hg',
     riskLevel: 4,
-    jamTemu: '04:48',
     jamDilapor: '10/04/2025 04:55:10',
-    namaPerawat: 'Ns. Ahmad Fauzi, A.Md.Kep',
+    namaPerawat: 'Ns. Vita Anggis, S.Kep., Ners',
     dokter: 'dr. Cempaka, Sp.P',
     clinicalNote: 'Hiperkapnia masif disertai pH ekstrim < 6.500. Kondisi henti napas iminen.',
     urgentActionNeeded: 'Asidosis Respiratorik Kritis: Ventilasi Tekanan Positif / Panggil Tim Code Blue',
@@ -143,9 +138,8 @@ const PRESETS: QuickPreset[] = [
     satuan: '10^3/µL',
     referenceRange: '150 - 450 10^3/µL',
     riskLevel: 3,
-    jamTemu: '23:02',
     jamDilapor: '27/01/2025 23:09:09',
-    namaPerawat: 'Ns. Siti Rahayu, S.Kep',
+    namaPerawat: 'Ns. Tri Harningsih, S.Kep., Ns',
     dokter: 'dr. Nadia, Sp.PD',
     clinicalNote: 'Trombositopenia kritis di bawah 20 ribu. Ancaman perdarahan spontan mukosa dan GIT.',
     urgentActionNeeded: 'Waspada Perdarahan Spontan: Tirah Baring Mutlak & Hindari Injeksi IM',
@@ -164,9 +158,8 @@ const PRESETS: QuickPreset[] = [
     satuan: 'ng/mL',
     referenceRange: '< 0.04 ng/mL',
     riskLevel: 4,
-    jamTemu: '07:18',
     jamDilapor: '31/10/2025 07:21:50',
-    namaPerawat: 'Ns. Ahmad Fauzi, A.Md.Kep',
+    namaPerawat: 'Ns. Vita Anggis, S.Kep., Ners',
     dokter: 'dr. Ghea, Sp.PD',
     clinicalNote: 'Peningkatan biomarker nekrosis miokard > 50x nilai rujukan normal.',
     urgentActionNeeded: 'Ancaman Infark Miokard: Rekam EKG 12 Lead Segera & Berikan Tirah Baring Total',
@@ -185,9 +178,8 @@ const PRESETS: QuickPreset[] = [
     satuan: 'mg/dL',
     referenceRange: '0.2 - 1.2 mg/dL',
     riskLevel: 3,
-    jamTemu: '08:05',
     jamDilapor: '09/04/2025 08:13:00',
-    namaPerawat: 'Ns. Siti Rahayu, S.Kep',
+    namaPerawat: 'Ns. Uji Prihatiningsih, S.Kep',
     dokter: 'dr. Ghea, Sp.PD',
     clinicalNote: 'Hiperbilirubinemia berat dengan sklera ikterik pekat. Dugaan kolestasis obstruktif akut.',
     urgentActionNeeded: 'Krisis Ikterik: Evaluasi Tanda Ensefalopati Hepatikum & Pantau Output Urin',
@@ -206,9 +198,8 @@ const PRESETS: QuickPreset[] = [
     satuan: 'mmol/L',
     referenceRange: '3.5 - 5.0 mmol/L',
     riskLevel: 1,
-    jamTemu: '14:20',
     jamDilapor: 'Hari ini, 14:25 WIB',
-    namaPerawat: 'Ns. Tri Wahyuni, S.Kep',
+    namaPerawat: 'Ns. Uji Prihatiningsih, S.Kep',
     dokter: 'dr. Ghea, Sp.PD',
     clinicalNote: 'Elektrolit kembali dalam batas normal pasca-koreksi kalium drip.',
     urgentActionNeeded: 'Monitoring Rutin Terjadwal Tiap 8 Jam per Shift',
@@ -276,10 +267,9 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
   const [riskLevel, setRiskLevel] = useState<RiskLevel>(4);
 
   // Timestamps & Communicators
-  const [jamTemu, setJamTemu] = useState<string>('12:05');
   const [jamDilapor, setJamDilapor] = useState<string>('12/03/2025 12:14:22');
   const [namaPerawat, setNamaPerawat] = useState<string>(
-    REGISTERED_NURSE_ACCOUNTS[0]?.name || 'Ns. Siti Rahayu, S.Kep'
+    REGISTERED_NURSE_ACCOUNTS[0]?.name || 'Ns. Uji Prihatiningsih, S.Kep'
   );
   const [dokter, setDokter] = useState<string>(selectedRoom?.doctorInCharge || 'dr. Ghea, Sp.PD');
 
@@ -323,7 +313,6 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
     setSatuan(preset.satuan);
     setReferenceRange(preset.referenceRange);
     setRiskLevel(preset.riskLevel);
-    setJamTemu(preset.jamTemu);
     setJamDilapor(preset.jamDilapor);
     setNamaPerawat(preset.namaPerawat);
     setDokter(preset.dokter);
@@ -337,7 +326,6 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
     const pad = (n: number) => n.toString().padStart(2, '0');
     const timeStr = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
     const dateStr = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}`;
-    setJamTemu(`${pad(now.getHours())}:${pad(Math.max(0, now.getMinutes() - 4))}`);
     setJamDilapor(`${dateStr} ${timeStr}`);
   };
 
@@ -355,7 +343,7 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
       pemeriksaan,
       hasil,
       satuan,
-      jamTemu,
+      jamTemu: jamDilapor,
       jamDilapor,
       dilaporOleh: activeLaboranName,
       namaPerawat,
@@ -696,7 +684,7 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
               <div className="flex items-center justify-between">
                 <span className="font-bold text-slate-800 uppercase tracking-wider text-[11px] flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-jih-blue" aria-hidden="true" />
-                  3. Waktu Temu, Pelaporan & Dokter DPJP:
+                  3. Waktu Pelaporan ke Perawat & Dokter DPJP:
                 </span>
                 <button
                   type="button"
@@ -707,36 +695,19 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label htmlFor="jam-temu" className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                    Jam Temu Hasil (Alat LIS):
-                  </label>
-                  <input
-                    id="jam-temu"
-                    type="text"
-                    value={jamTemu}
-                    onChange={(e) => setJamTemu(e.target.value)}
-                    className="w-full bg-white border border-slate-200 rounded p-1.5 text-xs font-mono text-slate-900 outline-none focus:border-jih-blue"
-                    placeholder="12:05"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="jam-dilapor" className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                    Jam Dilapor ke Perawat:
-                  </label>
-                  <input
-                    id="jam-dilapor"
-                    type="text"
-                    value={jamDilapor}
-                    onChange={(e) => setJamDilapor(e.target.value)}
-                    className="w-full bg-white border border-slate-200 rounded p-1.5 text-xs font-mono text-slate-900 outline-none focus:border-jih-blue"
-                    placeholder="12/03/2025 12:14:22"
-                    required
-                  />
-                </div>
+              <div>
+                <label htmlFor="jam-dilapor" className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
+                  Jam Dilapor ke Perawat:
+                </label>
+                <input
+                  id="jam-dilapor"
+                  type="text"
+                  value={jamDilapor}
+                  onChange={(e) => setJamDilapor(e.target.value)}
+                  className="w-full bg-white border border-slate-200 rounded p-2 text-xs font-mono text-slate-900 outline-none focus:border-jih-blue"
+                  placeholder="12/03/2025 12:14:22"
+                  required
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
@@ -754,7 +725,7 @@ export const LabDispatchPage: React.FC<LabDispatchPageProps> = ({ onNavigate }) 
 
                 <div>
                   <label htmlFor="nama-perawat" className="block text-[10px] font-bold text-slate-500 uppercase mb-1">
-                    Terima Oleh (4 Perawat Akun):
+                    Terima Oleh (Perawat Penerima):
                   </label>
                   <select
                     id="nama-perawat"

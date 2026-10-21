@@ -21,7 +21,8 @@ export const DUMMY_WARD_ROOMS: WardRoom[] = [
     independentActionAllowed: 'Diizinkan Mandiri: Berikan Oksigen NRM 12-15 Lpm, Posisikan Semi-Fowler Tegak, Siapkan Suction Lendir',
     timeElapsedMinutes: 4,
     reportedAt: '12/03/2025 12:14:22',
-    nurseReceiver: 'Uji Prihatiningsih'
+    nurseReceiver: 'Uji Prihatiningsih',
+    assignedNurse: 'Ns. Uji Prihatiningsih, S.Kep'
   },
   {
     id: 'room-icu-01',
@@ -43,7 +44,8 @@ export const DUMMY_WARD_ROOMS: WardRoom[] = [
     independentActionAllowed: 'Diizinkan Mandiri: Bagging Ventilasi BVM 100% O2 Kualitas Tinggi, Panggil Tim Code Blue ICU Segera',
     timeElapsedMinutes: 2,
     reportedAt: '10/04/2025 04:55:10',
-    nurseReceiver: 'Vita Anggis, S.Kep., Ners'
+    nurseReceiver: 'Vita Anggis, S.Kep., Ners',
+    assignedNurse: 'Ns. Vita Anggis, S.Kep., Ners'
   },
   {
     id: 'room-tulip-306',
@@ -65,7 +67,8 @@ export const DUMMY_WARD_ROOMS: WardRoom[] = [
     independentActionAllowed: 'Diizinkan Mandiri: Pasang IV Bore Besar, Guyur Cairan NaCl 0.9% 1000 mL dalam 1 Jam Sesuai Standing Order',
     timeElapsedMinutes: 12,
     reportedAt: '19/04/2025 07:15:30',
-    nurseReceiver: 'Diah Kartika, AMK'
+    nurseReceiver: 'Diah Kartika, AMK',
+    assignedNurse: 'Ns. Diah Kartika, AMK'
   },
   {
     id: 'room-orchid-201',
@@ -87,7 +90,8 @@ export const DUMMY_WARD_ROOMS: WardRoom[] = [
     independentActionAllowed: 'Diizinkan Mandiri: Pasang Bed-Rail Proteksi Kejang, Pantau Kesadaran GCS Tiap 30 Menit, Siapkan Koreksi Salin Normal',
     timeElapsedMinutes: 18,
     reportedAt: '29/08/2025 22:05:14',
-    nurseReceiver: 'Shinta Pramudya, S.Kep., Ns'
+    nurseReceiver: 'Shinta Pramudya, S.Kep., Ns',
+    assignedNurse: 'Ns. Shinta Pramudya, S.Kep., Ns'
   },
   {
     id: 'room-olive-102',
@@ -109,7 +113,8 @@ export const DUMMY_WARD_ROOMS: WardRoom[] = [
     independentActionAllowed: 'Diizinkan Mandiri: Tirah Baring Total, Edukasi Pasien Hindari Mengejan/Sikat Gigi Keras, Siapkan Sampel Crossmatch TC',
     timeElapsedMinutes: 8,
     reportedAt: '27/01/2025 23:09:09',
-    nurseReceiver: 'Tri Harningsih, S.Kep., Ns'
+    nurseReceiver: 'Tri Harningsih, S.Kep., Ns',
+    assignedNurse: 'Ns. Tri Harningsih, S.Kep., Ns'
   },
   {
     id: 'room-lily-401',
@@ -131,6 +136,7 @@ export const DUMMY_WARD_ROOMS: WardRoom[] = [
     independentActionAllowed: 'Diizinkan Mandiri: Observasi Tanda Vital Anak, Hitung Balans Cairan Ketat, Koordinasikan Terapi Cairan Pediatrik',
     timeElapsedMinutes: 25,
     reportedAt: '27/05/2025 22:51:00',
-    nurseReceiver: 'Kiki Septiana, S.Kep., Ns'
+    nurseReceiver: 'Kiki Septiana, S.Kep., Ns',
+    assignedNurse: 'Ns. Kiki Septiana, S.Kep., Ns'
   }
 ];

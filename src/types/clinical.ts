@@ -51,6 +51,7 @@ export interface WardRoom {
   timeElapsedMinutes: number;
   reportedAt?: string;
   nurseReceiver?: string;
+  assignedNurse?: string;
 }
 
 export interface SbarStep {
