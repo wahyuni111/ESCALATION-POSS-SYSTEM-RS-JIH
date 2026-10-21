@@ -39,6 +39,10 @@ export const Header: React.FC<HeaderProps> = ({
       title: 'Panduan Tindak Lanjut & Tindakan Mandiri',
       subtitle: 'Protokol Keperawatan Saat Dokter Berhalangan & Komunikasi SBAR'
     },
+    analytics: {
+      title: 'Dasbor Analitik & Kepatuhan Klinis',
+      subtitle: 'Evaluasi Beban Risiko Bangsal, Rasio Kendala DPJP & Kepatuhan SBAR'
+    },
     'model-manager': {
       title: 'Panel Pengelola Data & Model (Prototype UI)',
       subtitle: 'Eksplorasi Konfigurasi Ambang Batas Model CDS RS JIH'

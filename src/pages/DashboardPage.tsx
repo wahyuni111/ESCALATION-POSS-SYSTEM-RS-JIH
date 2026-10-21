@@ -4,7 +4,8 @@ import {
   ArrowRight,
   ShieldCheck,
   ChevronRight,
-  Activity
+  Activity,
+  BarChart3
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { DUMMY_SCENARIOS } from '../data/dummyScenarios';
@@ -50,6 +51,17 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               Unit: <span className="font-semibold text-white">{currentUser?.ward}</span> • Shift: <span className="font-semibold text-white">{currentUser?.shift}</span>.
               Pantau kondisi kamar pasien dan panduan tindakan mandiri saat dokter berhalangan pada papan kendali di bawah.
             </p>
+          </div>
+
+          <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+            <button
+              onClick={() => onNavigate('analytics')}
+              className="px-3.5 py-2 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 border border-blue-400/30 text-blue-100 text-xs font-semibold flex items-center gap-2 transition-colors"
+              title="Buka dasbor analitik kesiapsiagaan bangsal dan audit kepatuhan SBAR"
+            >
+              <BarChart3 className="w-4 h-4 text-blue-300" aria-hidden="true" />
+              <span>Analitik Kesiapsiagaan</span>
+            </button>
           </div>
         </div>
       </div>

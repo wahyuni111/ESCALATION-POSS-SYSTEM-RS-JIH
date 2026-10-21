@@ -4,6 +4,7 @@ import {
   Search,
   Activity,
   FileCheck2,
+  BarChart3,
   Cpu,
   Settings,
   LogOut,
@@ -20,6 +21,7 @@ export type PageId =
   | 'search'
   | 'risk-detail'
   | 'guideline'
+  | 'analytics'
   | 'model-manager'
   | 'settings';
 
@@ -45,6 +47,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
       sublabel: 'Peta Ruang & Skenario Aktif',
       icon: LayoutDashboard,
       badge: '6 Ruang'
+    },
+    {
+      id: 'analytics' as PageId,
+      label: 'Analitik & Kepatuhan',
+      sublabel: 'Beban Risiko & Audit SBAR',
+      icon: BarChart3
     },
     {
       id: 'search' as PageId,

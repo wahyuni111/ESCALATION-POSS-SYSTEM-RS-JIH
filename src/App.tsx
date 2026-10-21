@@ -7,6 +7,7 @@ import { DashboardPage } from './pages/DashboardPage';
 import { SearchPage } from './pages/SearchPage';
 import { RiskDetailPage } from './pages/RiskDetailPage';
 import { GuidelinePage } from './pages/GuidelinePage';
+import { AnalyticsPage } from './pages/AnalyticsPage';
 import { ModelManagerPage } from './pages/ModelManagerPage';
 import { SettingsPage } from './pages/SettingsPage';
 
@@ -47,6 +48,13 @@ const AppContent: React.FC = () => {
         return (
           <GuidelinePage
             scenarioId={selectedScenarioId}
+            onSelectScenario={setSelectedScenarioId}
+          />
+        );
+      case 'analytics':
+        return (
+          <AnalyticsPage
+            onNavigate={setCurrentPage}
             onSelectScenario={setSelectedScenarioId}
           />
         );
