@@ -151,7 +151,7 @@ export const GuidelinePage: React.FC<GuidelinePageProps> = ({
           }`}
         >
           <ListOrdered className="w-4 h-4" />
-          <span>4. Checklist Simulasi Aksi</span>
+          <span>4. Alur Tindakan Terstruktur</span>
         </button>
       </div>
 

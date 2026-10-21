@@ -1,5 +1,5 @@
-import React from 'react';
-import { Hospital } from 'lucide-react';
+import React, { useState } from 'react';
+import hospitalLogo from '../../assets/hospital-logo.png';
 
 interface HospitalLogoProps {
   className?: string;
@@ -13,20 +13,27 @@ export const HospitalLogo: React.FC<HospitalLogoProps> = ({
   collapsed = false
 }) => {
   const isDark = variant === 'dark';
+  const [hasError, setHasError] = useState(false);
 
   return (
     <div className={`flex items-center gap-3 select-none ${className}`}>
       {/* Logo Rumah Sakit Resmi */}
       <div
-        className={`relative flex items-center justify-center shrink-0 w-10 h-10 rounded-lg border transition-all ${
-          isDark
-            ? 'bg-jih-navy-light/80 border-blue-400/30 text-blue-200'
-            : 'bg-jih-light-surface border-jih-blue/25 text-jih-blue'
-        }`}
+        className="relative flex items-center justify-center shrink-0 w-10 h-10 rounded-lg bg-white p-1 border border-blue-200 shadow-xs overflow-hidden"
         title="Logo Rumah Sakit JIH Purwokerto"
       >
-        <Hospital className="w-5 h-5 text-inherit" aria-hidden="true" />
-        <span className="sr-only">Logo Rumah Sakit JIH Purwokerto</span>
+        {!hasError ? (
+          <img
+            src={hospitalLogo}
+            alt="Logo RS JIH Purwokerto"
+            className="w-full h-full object-contain"
+            onError={() => setHasError(true)}
+          />
+        ) : (
+          <span className="text-[10px] font-bold text-jih-navy text-center leading-tight">
+            JIH
+          </span>
+        )}
       </div>
 
       {!collapsed && (

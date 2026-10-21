@@ -5,7 +5,6 @@ import {
   Activity,
   FileCheck2,
   FlaskConical,
-  Cpu,
   Settings,
   LogOut,
   ChevronLeft,
@@ -96,13 +95,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       sublabel: 'Tindakan Mandiri & SBAR',
       icon: FileCheck2,
       highlight: true
-    },
-    {
-      id: 'model-manager',
-      label: 'Pengelola Data & Model',
-      sublabel: 'Prototype UI Eksploratif',
-      icon: Cpu,
-      isPrototype: true
     },
     {
       id: 'settings',
