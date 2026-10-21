@@ -42,25 +42,25 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="p-1.5 rounded-lg bg-jih-navy text-white">
-              <Stethoscope className="w-5 h-5" />
+              <Stethoscope className="w-5 h-5" aria-hidden="true" />
             </span>
             <h2 className="text-base sm:text-lg font-bold text-jih-navy">
               Peta Ruang Jaga Bangsal & Poli (Ward Action Board)
             </h2>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Visualisasi instan kondisi kamar rawat inap dan poli yang memerlukan tindakan keperawatan segera saat dokter sedang berhalangan.
+            Visualisasi instan kondisi kamar rawat inap dan poli yang memerlukan tindakan keperawatan mandiri saat dokter berhalangan.
           </p>
         </div>
 
         {/* Status Cepat Kesiapsiagaan */}
         <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-900 text-xs font-semibold">
-            <ShieldAlert className="w-4 h-4 text-rose-600 shrink-0" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-900 text-xs font-semibold">
+            <ShieldAlert className="w-4 h-4 text-rose-600 shrink-0" aria-hidden="true" />
             <span>{criticalCount} Tindakan Kritis Segera</span>
           </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-orange-50 border border-orange-200 text-orange-900 text-xs font-semibold">
-            <AlertTriangle className="w-4 h-4 text-orange-600 shrink-0" />
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-50 border border-orange-200 text-orange-900 text-xs font-semibold">
+            <AlertTriangle className="w-4 h-4 text-orange-600 shrink-0" aria-hidden="true" />
             <span>{highCount} Siaga Resusitasi / SBAR</span>
           </div>
         </div>
@@ -68,14 +68,14 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
 
       {/* Filter Kontrol Bar */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 py-4 text-xs">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="font-semibold text-slate-700 flex items-center gap-1">
-            <Filter className="w-3.5 h-3.5 text-slate-400" />
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className="font-semibold text-slate-700 flex items-center gap-1 mr-1">
+            <Filter className="w-3.5 h-3.5 text-slate-400" aria-hidden="true" />
             Tingkat Risiko:
           </span>
           <button
             onClick={() => setFilterLevel('all')}
-            className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
+            className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
               filterLevel === 'all'
                 ? 'bg-jih-navy text-white'
                 : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -85,30 +85,30 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
           </button>
           <button
             onClick={() => setFilterLevel(4)}
-            className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
+            className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
               filterLevel === 4
                 ? 'bg-rose-700 text-white'
-                : 'bg-rose-50 text-rose-800 hover:bg-rose-100 border border-rose-200'
+                : 'bg-white text-rose-700 hover:bg-rose-50 border border-rose-200'
             }`}
           >
             Level 4: Kritis ({DUMMY_WARD_ROOMS.filter((r) => r.riskLevel === 4).length})
           </button>
           <button
             onClick={() => setFilterLevel(3)}
-            className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
+            className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
               filterLevel === 3
-                ? 'bg-orange-700 text-white'
-                : 'bg-orange-50 text-orange-800 hover:bg-orange-100 border border-orange-200'
+                ? 'bg-orange-600 text-white'
+                : 'bg-white text-orange-700 hover:bg-orange-50 border border-orange-200'
             }`}
           >
             Level 3: Tinggi ({DUMMY_WARD_ROOMS.filter((r) => r.riskLevel === 3).length})
           </button>
           <button
             onClick={() => setFilterLevel(2)}
-            className={`px-2.5 py-1 rounded-md font-medium transition-colors ${
+            className={`px-3 py-1.5 rounded-lg font-medium transition-colors ${
               filterLevel === 2
-                ? 'bg-amber-700 text-white'
-                : 'bg-amber-50 text-amber-800 hover:bg-amber-100 border border-amber-200'
+                ? 'bg-amber-600 text-white'
+                : 'bg-white text-amber-700 hover:bg-amber-50 border border-amber-200'
             }`}
           >
             Level 2: Sedang ({DUMMY_WARD_ROOMS.filter((r) => r.riskLevel === 2).length})
@@ -117,12 +117,12 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
 
         {/* Filter Unit / Bangsal */}
         <div className="flex items-center gap-2 w-full sm:w-auto">
-          <label htmlFor="ward-select" className="text-slate-500 whitespace-nowrap">Unit Bangsal:</label>
+          <label htmlFor="ward-select" className="text-slate-500 whitespace-nowrap text-xs">Unit Bangsal:</label>
           <select
             id="ward-select"
             value={selectedWard}
             onChange={(e) => setSelectedWard(e.target.value)}
-            className="w-full sm:w-auto bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 font-medium text-slate-700 outline-none text-xs"
+            className="w-full sm:w-auto bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 font-medium text-slate-700 outline-none text-xs hover:border-slate-300 transition-colors"
           >
             <option value="all">Semua Bangsal & Poli</option>
             {wards.map((w) => (
@@ -143,119 +143,114 @@ export const WardMonitoringBoard: React.FC<WardMonitoringBoardProps> = ({
           return (
             <div
               key={room.id}
-              className={`rounded-xl border p-4.5 transition-all flex flex-col justify-between ${
+              className={`rounded-xl border bg-white p-4 sm:p-5 transition-all duration-200 flex flex-col justify-between shadow-xs hover:shadow-sm ${
                 isCritical
-                  ? 'bg-rose-50/50 border-rose-300 shadow-sm ring-1 ring-rose-200'
+                  ? 'border-slate-200 border-l-4 border-l-rose-600'
                   : isHigh
-                  ? 'bg-orange-50/40 border-orange-200 shadow-xs'
-                  : 'bg-slate-50/70 border-slate-200 hover:border-slate-300'
+                  ? 'border-slate-200 border-l-4 border-l-orange-500'
+                  : 'border-slate-200 border-l-4 border-l-amber-400'
               }`}
             >
               <div>
-                {/* Header Kartu: Nama Kamar & Badge Risiko */}
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-bold text-sm text-slate-900">
-                        {room.roomNumber}
-                      </span>
-                      <span className="text-[11px] text-slate-500 font-medium">
-                        ({room.patientInitials}, {room.ageGender})
-                      </span>
-                    </div>
-                    <span className="text-[11px] text-slate-500 block truncate">
-                      {room.wardName}
-                    </span>
+                {/* Header Kartu: Nama Kamar, Pasien & Badge Risiko */}
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-sm text-slate-900 truncate">
+                      {room.roomNumber}
+                    </h3>
+                    <p className="text-xs text-slate-500 truncate mt-0.5">
+                      {room.patientInitials}, {room.ageGender} • {room.wardName}
+                    </p>
                   </div>
                   <RiskBadge level={room.riskLevel} size="sm" />
                 </div>
 
-                {/* Critical Lab Flag / Trigger */}
-                <div className="mb-3 bg-white border border-slate-200 rounded-lg p-2.5">
-                  <div className="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-0.5">
-                    Critical Flag / Tanda Bahaya:
-                  </div>
-                  <p className="text-xs font-semibold text-slate-800 leading-snug">
+                {/* Tanda Bahaya & Temuan Kritis Klinis */}
+                <div className="mt-3 pt-3 border-t border-slate-100 space-y-1">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600 block">
+                    Tanda Bahaya & Nilai Kritis:
+                  </span>
+                  <p className="text-xs sm:text-sm font-semibold text-slate-900 leading-snug">
                     {room.criticalFlag}
                   </p>
-                  <p className="text-[11px] text-slate-500 mt-1 italic">
-                    Diagnosa: {room.currentDiagnosis}
+                  <p className="text-[11px] text-slate-500">
+                    <span className="font-medium text-slate-600">Diagnosis:</span> {room.currentDiagnosis}
                   </p>
                 </div>
 
-                {/* Kotak Rekomendasi Tindakan Mendesak */}
+                {/* Rekomendasi Tindakan & Kewenangan Mandiri Terpadu */}
                 <div
-                  className={`rounded-lg p-2.5 mb-3 text-xs leading-relaxed ${
+                  className={`mt-3 rounded-lg p-3 text-xs ${
                     isCritical
-                      ? 'bg-rose-100/80 border border-rose-300 text-rose-950 font-semibold'
+                      ? 'bg-rose-50/80 border border-rose-200/80 text-rose-950'
                       : isHigh
-                      ? 'bg-orange-100/70 border border-orange-200 text-orange-950 font-medium'
-                      : 'bg-emerald-50 border border-emerald-200 text-emerald-950'
+                      ? 'bg-orange-50/80 border border-orange-200/80 text-orange-950'
+                      : 'bg-slate-50 border border-slate-200 text-slate-900'
                   }`}
                 >
-                  <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide font-bold mb-1">
-                    <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                  <div className="flex items-center gap-1.5 font-bold text-[11px] uppercase tracking-wide mb-1 text-slate-800">
+                    <AlertTriangle
+                      className={`w-3.5 h-3.5 shrink-0 ${
+                        isCritical ? 'text-rose-600' : isHigh ? 'text-orange-600' : 'text-slate-500'
+                      }`}
+                      aria-hidden="true"
+                    />
                     <span>Tindakan Yang Dibutuhkan:</span>
                   </div>
-                  <p className="text-xs">{room.urgentActionNeeded}</p>
+                  <p className="font-semibold leading-relaxed">{room.urgentActionNeeded}</p>
+
+                  <div className="mt-2.5 pt-2 border-t border-slate-200/60 text-[11px] leading-relaxed text-slate-700">
+                    <span className="font-bold text-jih-blue">Kewenangan Mandiri: </span>
+                    <span>{room.independentActionAllowed}</span>
+                  </div>
                 </div>
 
-                {/* Status Keberadaan Dokter DPJP */}
-                <div className="flex items-center justify-between text-[11px] text-slate-600 bg-slate-100/80 rounded-md px-2.5 py-1.5 mb-3">
-                  <span className="flex items-center gap-1">
-                    <UserCheck className="w-3.5 h-3.5 text-slate-500" />
-                    Status Dokter:
-                  </span>
-                  <span
-                    className={`font-semibold ${
-                      room.doctorStatus.includes('Operasi') ||
-                      room.doctorStatus.includes('Visite') ||
-                      room.doctorStatus.includes('Poli')
-                        ? 'text-amber-800'
-                        : 'text-emerald-700'
-                    }`}
-                  >
-                    {room.doctorStatus}
-                  </span>
-                </div>
+                {/* Status Keberadaan Dokter DPJP & Waktu */}
+                <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500">
+                  <div className="flex items-center gap-1.5 truncate">
+                    <UserCheck className="w-3.5 h-3.5 text-slate-400 shrink-0" aria-hidden="true" />
+                    <span>DPJP:</span>
+                    <span
+                      className={`font-semibold truncate ${
+                        room.doctorStatus.includes('Operasi') ||
+                        room.doctorStatus.includes('Visite') ||
+                        room.doctorStatus.includes('Poli')
+                          ? 'text-amber-800'
+                          : 'text-emerald-700'
+                      }`}
+                    >
+                      {room.doctorStatus}
+                    </span>
+                  </div>
 
-                {/* Kewenangan Tindakan Mandiri Perawat */}
-                <div className="text-[11px] bg-blue-50 border border-blue-200 rounded-md p-2 text-jih-navy leading-normal mb-4">
-                  <span className="font-bold text-jih-blue block text-[10px] uppercase tracking-wide mb-0.5">
-                    Kewenangan Mandiri Perawat:
+                  <span className="flex items-center gap-1 shrink-0 ml-2">
+                    <Clock className="w-3 h-3 text-slate-400" aria-hidden="true" />
+                    {room.timeElapsedMinutes} mnt lalu
                   </span>
-                  {room.independentActionAllowed}
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center justify-between gap-2 pt-3 border-t border-slate-200/80 text-xs">
-                <span className="text-[11px] text-slate-500 flex items-center gap-1">
-                  <Clock className="w-3 h-3 text-slate-400" />
-                  {room.timeElapsedMinutes} mnt lalu
-                </span>
-
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={() => onSelectScenario(room.scenarioId)}
-                    className="px-2.5 py-1 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-200/70 font-medium transition-colors"
-                  >
-                    Detail Risiko
-                  </button>
-                  <button
-                    onClick={() => onOpenGuideline(room.scenarioId)}
-                    className={`px-3 py-1 rounded-md font-bold text-white flex items-center gap-1 shadow-xs transition-colors ${
-                      isCritical
-                        ? 'bg-rose-700 hover:bg-rose-800'
-                        : isHigh
-                        ? 'bg-orange-600 hover:bg-orange-700'
-                        : 'bg-jih-blue hover:bg-jih-blue-hover'
-                    }`}
-                  >
-                    <span>Panduan SBAR</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </button>
-                </div>
+              <div className="flex items-center gap-2 pt-3 mt-3 border-t border-slate-100 text-xs">
+                <button
+                  onClick={() => onSelectScenario(room.scenarioId)}
+                  className="flex-1 py-1.5 px-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-center transition-colors"
+                >
+                  Detail Risiko
+                </button>
+                <button
+                  onClick={() => onOpenGuideline(room.scenarioId)}
+                  className={`flex-1 py-1.5 px-3 rounded-lg font-semibold text-white flex items-center justify-center gap-1 transition-colors ${
+                    isCritical
+                      ? 'bg-rose-600 hover:bg-rose-700'
+                      : isHigh
+                      ? 'bg-orange-600 hover:bg-orange-700'
+                      : 'bg-jih-blue hover:bg-jih-blue-hover'
+                  }`}
+                >
+                  <span>Panduan SBAR</span>
+                  <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                </button>
               </div>
             </div>
           );
