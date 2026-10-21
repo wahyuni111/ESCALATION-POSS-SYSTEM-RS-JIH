@@ -36,15 +36,18 @@ export const LoginPage: React.FC = () => {
             <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
               Pilih Profil Perawat Demo:
             </label>
-            <div className="space-y-2.5">
+            <div className="space-y-2.5" role="radiogroup" aria-label="Daftar profil perawat demo">
               {DEMO_USERS.map((user) => {
                 const isSelected = selectedUser.id === user.id;
 
                 return (
-                  <div
+                  <button
                     key={user.id}
+                    type="button"
+                    role="radio"
+                    aria-checked={isSelected}
                     onClick={() => setSelectedUser(user)}
-                    className={`p-3 rounded-xl border text-left cursor-pointer transition-all flex items-center justify-between ${
+                    className={`w-full p-3 rounded-xl border text-left cursor-pointer transition-all flex items-center justify-between ${
                       isSelected
                         ? 'border-jih-blue bg-blue-50/70 shadow-xs ring-1 ring-jih-blue'
                         : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
@@ -58,7 +61,7 @@ export const LoginPage: React.FC = () => {
                             : 'bg-slate-200 text-slate-700'
                         }`}
                       >
-                        <User className="w-4 h-4" />
+                        <User className="w-4 h-4" aria-hidden="true" />
                       </div>
                       <div className="min-w-0">
                         <p className="text-xs font-bold text-slate-900 truncate">
@@ -74,9 +77,9 @@ export const LoginPage: React.FC = () => {
                     </div>
 
                     {isSelected && (
-                      <CheckCircle2 className="w-5 h-5 text-jih-blue shrink-0 ml-2" />
+                      <CheckCircle2 className="w-5 h-5 text-jih-blue shrink-0 ml-2" aria-hidden="true" />
                     )}
-                  </div>
+                  </button>
                 );
               })}
             </div>

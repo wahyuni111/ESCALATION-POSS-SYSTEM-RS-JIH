@@ -47,7 +47,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<UserProfile | null>(DEMO_USERS[0]);
+  const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
 
   const loginAs = (user: UserProfile) => {
     setCurrentUser(user);
